@@ -13,8 +13,9 @@ impl ClusterRoleExt for rbacv1::ClusterRole {
         let metadata = Self::metadata(name);
         Self {
             metadata,
-            ..Self::default() // aggregation_rule: todo!(),
-                              // rules: todo!(),
+            // aggregation_rule: todo!(),
+            // rules: todo!(),
+            ..Self::default()
         }
     }
 

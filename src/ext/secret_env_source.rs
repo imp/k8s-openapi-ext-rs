@@ -2,14 +2,14 @@ use super::*;
 
 /// Builders for `corev1::SecretEnvSource` objects
 pub trait SecretEnvSourceExt: Sized {
-    /// Construct `corev1::SecretEnvSource` object from secret of this name
+    /// Constructs `corev1::SecretEnvSource` object from secret of this `name`
     fn secret_name(name: impl ToString) -> Self;
 
-    /// Specify whether the Secret must be defined
+    /// Specifies whether the Secret must be defined
 
     fn optional(self, yes: bool) -> Self;
 
-    /// Mark this Secret as required (equials to calling .optional(false))
+    /// Marks this `Secret` as required (equivalent to calling .optional(false))
 
     fn required(self) -> Self {
         self.optional(false)

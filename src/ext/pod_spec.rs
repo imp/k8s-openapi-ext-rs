@@ -2,6 +2,7 @@ use super::*;
 
 pub trait PodSpecExt {
     fn container(container: corev1::Container) -> Self;
+
     fn containers(containers: impl IntoIterator<Item = corev1::Container>) -> Self;
 
     fn service_account_name(self, name: impl ToString) -> Self;

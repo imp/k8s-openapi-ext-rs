@@ -1,12 +1,10 @@
-use k8s_openapi::ByteString;
-
 use super::*;
 
 /// Extension trait for `corev1::ConfigMap`.
 /// Fluent builders and mutable accessors
 ///
-pub trait ConfigMapExt: super::ResourceBuilder {
-    /// Create new `corev1::ConfigMap object with given `name`
+pub trait ConfigMapExt: ResourceBuilder {
+    /// Creates new `corev1::ConfigMap object with given `name`
     ///
     fn new(name: impl ToString) -> Self;
 
@@ -22,13 +20,13 @@ pub trait ConfigMapExt: super::ResourceBuilder {
     ///
     fn data(self, data: impl IntoIterator<Item = (impl ToString, impl ToString)>) -> Self;
 
-    /// Mutable access to data
-    /// Initializes data with empty `BTreeMap` if absent
+    /// Mutable access to `data`.
+    /// Initializes `data` with empty `BTreeMap` if absent
     ///
     fn data_mut(&mut self) -> &mut BTreeMap<String, String>;
 
-    /// Mutable access to binary_data
-    /// Initializes bianry_data with empty `BTreeMap` if absent
+    /// Mutable access to `binary_data`.
+    /// Initializes `binary_data` with empty `BTreeMap` if absent
     ///
     fn binary_data_mut(&mut self) -> &mut BTreeMap<String, ByteString>;
 }
