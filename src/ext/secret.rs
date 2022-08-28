@@ -23,7 +23,7 @@ pub trait SecretExt: super::ResourceBuilder + Sized {
 
     fn string_data(self, data: impl IntoIterator<Item = (impl ToString, impl ToString)>) -> Self;
     fn image_pull_secret(name: impl ToString, data: impl ToString) -> Self {
-        let data = Some((DOCKER_CONFIG_JSON_KEY.to_string(), data.to_string()));
+        let data = Some((DOCKER_CONFIG_JSON_KEY, data));
         Self::new(name)
             .r#type(DOCKER_CONFIG_JSON_TYPE)
             .string_data(data)
