@@ -52,10 +52,11 @@ impl SecretExt for corev1::Secret {
         let metadata = Self::metadata(name);
         Self {
             metadata,
-            ..Self::default() // immutable: todo!(),
-                              // data: todo!(),
-                              // string_data: todo!(),
-                              // type_: todo!(),
+            // immutable: todo!(),
+            // data: todo!(),
+            // string_data: todo!(),
+            // type_: todo!(),
+            ..Self::default()
         }
     }
 
