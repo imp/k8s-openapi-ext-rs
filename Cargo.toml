@@ -8,7 +8,11 @@ repository = "https://github.com/imp/k8s-openapi-ext-rs"
 license = "Apache-2.0"
 
 [dependencies]
+base64 = "0.13"
 k8s-openapi = { version = "0.15", features = [] }
+
+[dev-dependencies]
+serde_json = "1.0"
 
 [dev-dependencies.k8s-openapi]
 version = "0.15"

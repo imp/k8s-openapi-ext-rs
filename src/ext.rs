@@ -22,6 +22,7 @@ pub use role::RoleExt;
 pub use role_binding::RoleBindingExt;
 pub use role_ref::RoleRefExt;
 pub use secret::SecretExt;
+pub use secret::SecretExt2;
 pub use secret_env_source::SecretEnvSourceExt;
 pub use secret_volume_source::SecretVolumeSourceExt;
 pub use service::ServiceExt;

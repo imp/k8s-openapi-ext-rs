@@ -47,6 +47,7 @@ pub use ext::RoleExt;
 pub use ext::RoleRefExt;
 pub use ext::SecretEnvSourceExt;
 pub use ext::SecretExt;
+pub use ext::SecretExt2;
 pub use ext::SecretVolumeSourceExt;
 pub use ext::ServiceAccountExt;
 pub use ext::ServiceExt;

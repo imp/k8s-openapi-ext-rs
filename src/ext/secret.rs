@@ -29,8 +29,21 @@ pub trait SecretExt: super::ResourceBuilder + Sized {
 
     /// Creates new image pull secret object
     ///
-    fn image_pull_secret(name: impl ToString, data: impl ToString) -> Self {
-        let data = [(DOCKER_CONFIG_JSON_KEY, data)];
+    fn image_pull_secret(
+        name: impl ToString,
+        registry: impl ToString,
+        username: impl ToString,
+        password: impl ToString,
+    ) -> Self {
+        let registry = registry.to_string();
+        let username = username.to_string();
+        let password = password.to_string();
+        let auth = format!("{username}:{password}");
+        let auth = base64::encode(auth);
+        let config = format!(
+            r#"{{"auths":{{"{registry}":{{"username":"{username}","password":"{password}","auth":"{auth}"}}}}}}"#
+        );
+        let data = [(DOCKER_CONFIG_JSON_KEY, config)];
         Self::new(name)
             .r#type(DOCKER_CONFIG_JSON_TYPE)
             .string_data(data)
@@ -44,6 +57,18 @@ pub trait SecretExt: super::ResourceBuilder + Sized {
             (BASIC_AUTH_PASSWORD, password.to_string()),
         ];
         Self::new(name).r#type(BASIC_AUTH_TYPE).string_data(data)
+    }
+}
+
+pub trait SecretExt2: SecretExt {
+    /// Creates new image pull secret object when you already have the .docker/config.json
+    /// content extracted from some other source (i.e. secret)
+    ///
+    fn image_pull_secret(name: impl ToString, data: impl ToString) -> Self {
+        let data = [(DOCKER_CONFIG_JSON_KEY, data)];
+        Self::new(name)
+            .r#type(DOCKER_CONFIG_JSON_TYPE)
+            .string_data(data)
     }
 }
 
@@ -90,5 +115,27 @@ impl SecretExt for corev1::Secret {
             string_data: Some(data),
             ..self
         }
+    }
+}
+
+impl SecretExt2 for corev1::Secret {}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    use serde_json as json;
+
+    #[test]
+    fn image_pull_secret() {
+        let secret = <corev1::Secret as SecretExt>::image_pull_secret(
+            "name", "registry", "username", "password",
+        );
+        // println!("{secret:#?}");
+        let string_data = secret.string_data.unwrap_or_default();
+        assert_eq!(string_data.len(), 1);
+        let config: json::Value = json::from_str(&string_data[DOCKER_CONFIG_JSON_KEY]).unwrap();
+        // println!("{config:#?}");
+        assert!(config.is_object());
     }
 }
