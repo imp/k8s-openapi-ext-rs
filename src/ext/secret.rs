@@ -16,6 +16,9 @@ const BASIC_AUTH_TYPE: &str = "kubernetes.io/basic-auth";
 const BASIC_AUTH_USERNAME: &str = "username";
 const BASIC_AUTH_PASSWORD: &str = "password";
 
+const SSH_AUTH_TYPE: &str = "kubernetes.io/ssh-auth";
+const SSH_AUTH_PRIVATE_KEY: &str = "ssh-privatekey";
+
 pub trait SecretExt: super::ResourceBuilder + Sized {
     fn new(name: impl ToString) -> Self;
 
@@ -57,6 +60,11 @@ pub trait SecretExt: super::ResourceBuilder + Sized {
             (BASIC_AUTH_PASSWORD, password.to_string()),
         ];
         Self::new(name).r#type(BASIC_AUTH_TYPE).string_data(data)
+    }
+
+    fn ssh_auth(name: impl ToString, private_key: impl ToString) -> Self {
+        let data = [(SSH_AUTH_PRIVATE_KEY, private_key)];
+        Self::new(name).r#type(SSH_AUTH_TYPE).string_data(data)
     }
 }
 
@@ -137,5 +145,16 @@ mod tests {
         let config: json::Value = json::from_str(&string_data[DOCKER_CONFIG_JSON_KEY]).unwrap();
         // println!("{config:#?}");
         assert!(config.is_object());
+    }
+
+    #[test]
+    fn ssh_auth() {
+        let secret = corev1::Secret::ssh_auth(
+            "name",
+            "KGpwKaqlGas+LaAqdwdfAAAEEAAAAzAAAAC3NzaC1lZDI1NTE5AAAAIClTFvhvwp1UH25b",
+        );
+        let string_data = secret.string_data.unwrap_or_default();
+        assert_eq!(string_data.len(), 1);
+        assert_eq!(string_data[SSH_AUTH_PRIVATE_KEY].len(), 70);
     }
 }
