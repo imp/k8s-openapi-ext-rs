@@ -12,6 +12,10 @@ use super::*;
 const DOCKER_CONFIG_JSON_TYPE: &str = "kubernetes.io/dockerconfigjson";
 const DOCKER_CONFIG_JSON_KEY: &str = ".dockerconfigjson";
 
+const BASIC_AUTH_TYPE: &str = "kubernetes.io/basic-auth";
+const BASIC_AUTH_USERNAME: &str = "username";
+const BASIC_AUTH_PASSWORD: &str = "password";
+
 pub trait SecretExt: super::ResourceBuilder + Sized {
     fn new(name: impl ToString) -> Self;
 
@@ -22,11 +26,24 @@ pub trait SecretExt: super::ResourceBuilder + Sized {
     fn data(self, data: impl IntoIterator<Item = (impl ToString, ByteString)>) -> Self;
 
     fn string_data(self, data: impl IntoIterator<Item = (impl ToString, impl ToString)>) -> Self;
+
+    /// Creates new image pull secret object
+    ///
     fn image_pull_secret(name: impl ToString, data: impl ToString) -> Self {
-        let data = Some((DOCKER_CONFIG_JSON_KEY, data));
+        let data = [(DOCKER_CONFIG_JSON_KEY, data)];
         Self::new(name)
             .r#type(DOCKER_CONFIG_JSON_TYPE)
             .string_data(data)
+    }
+
+    /// Creates new basic authentication secret object
+    ///
+    fn basic_auth(name: impl ToString, username: impl ToString, password: impl ToString) -> Self {
+        let data = [
+            (BASIC_AUTH_USERNAME, username.to_string()),
+            (BASIC_AUTH_PASSWORD, password.to_string()),
+        ];
+        Self::new(name).r#type(BASIC_AUTH_TYPE).string_data(data)
     }
 }
 
