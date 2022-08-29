@@ -9,8 +9,9 @@ impl NamespaceExt for corev1::Namespace {
         let metadata = Self::metadata(name);
         Self {
             metadata,
-            ..Self::default() // spec: todo!(),
-                              // status: todo!(),
+            // spec: todo!(),
+            // status: todo!(),
+            ..Self::default()
         }
     }
 }

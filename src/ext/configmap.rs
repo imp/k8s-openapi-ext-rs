@@ -36,9 +36,10 @@ impl ConfigMapExt for corev1::ConfigMap {
         let metadata = Self::metadata(name);
         Self {
             metadata,
-            ..Self::default() // binary_data: todo!(),
-                              // data: todo!(),
-                              // immutable: todo!(),
+            // binary_data: todo!(),
+            // data: todo!(),
+            // immutable: todo!(),
+            ..Self::default()
         }
     }
 

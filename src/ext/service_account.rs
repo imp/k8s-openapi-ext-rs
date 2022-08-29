@@ -15,9 +15,10 @@ impl ServiceAccountExt for corev1::ServiceAccount {
         let metadata = Self::metadata(name);
         Self {
             metadata,
-            ..Self::default() // automount_service_account_token: todo!(),
-                              // image_pull_secrets: todo!(),
-                              // secrets: todo!(),
+            // automount_service_account_token: todo!(),
+            // image_pull_secrets: todo!(),
+            // secrets: todo!(),
+            ..Self::default()
         }
     }
 

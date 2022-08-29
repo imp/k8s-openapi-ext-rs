@@ -11,7 +11,8 @@ impl RoleExt for rbacv1::Role {
         let metadata = Self::metadata(name);
         Self {
             metadata,
-            ..Self::default() // rules: todo!(),
+            // rules: todo!(),
+            ..Self::default()
         }
     }
 

@@ -97,23 +97,3 @@ impl ProbeExt for corev1::Probe {
         self
     }
 }
-
-// trait EnvVarExtPrivate {
-//     fn config_map_key_ref(name: impl ToString, field_path: impl ToString) -> Self;
-//     fn resource_field_ref(name: impl ToString, field_path: impl ToString) -> Self;
-//     fn secret_key_ref(name: impl ToString, field_path: impl ToString) -> Self;
-// }
-
-// impl EnvVarExtPrivate for corev1::EnvVar {
-//     fn config_map_key_ref(name: impl ToString, field_path: impl ToString) -> Self {
-//         todo!()
-//     }
-
-//     fn resource_field_ref(name: impl ToString, field_path: impl ToString) -> Self {
-//         todo!()
-//     }
-
-//     fn secret_key_ref(name: impl ToString, field_path: impl ToString) -> Self {
-//         todo!()
-//     }
-// }
