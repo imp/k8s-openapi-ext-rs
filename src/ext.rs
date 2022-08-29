@@ -59,25 +59,7 @@ mod volume_mount;
 
 pub trait ResourceBuilder {
     fn metadata(name: impl ToString) -> metav1::ObjectMeta {
-        let name = Some(name.to_string());
-        metav1::ObjectMeta {
-            name,
-            ..metav1::ObjectMeta::default() // annotations: todo!(),
-                                            // cluster_name: todo!(),
-                                            // creation_timestamp: todo!(),
-                                            // deletion_grace_period_seconds: todo!(),
-                                            // deletion_timestamp: todo!(),
-                                            // finalizers: todo!(),
-                                            // generate_name: todo!(),
-                                            // generation: todo!(),
-                                            // labels: todo!(),
-                                            // managed_fields: todo!(),
-                                            // namespace: todo!(),
-                                            // owner_references: todo!(),
-                                            // resource_version: todo!(),
-                                            // self_link: todo!(),
-                                            // uid: todo!(),
-        }
+        metadata(name)
     }
 
     fn namespace(self, namespace: impl ToString) -> Self;
@@ -118,5 +100,27 @@ where
     fn with_resource_version(mut self, resource_version: String) -> Self {
         self.metadata_mut().resource_version = Some(resource_version);
         self
+    }
+}
+
+fn metadata(name: impl ToString) -> metav1::ObjectMeta {
+    let name = Some(name.to_string());
+    metav1::ObjectMeta {
+        name,
+        // annotations: todo!(),
+        // creation_timestamp: todo!(),
+        // deletion_grace_period_seconds: todo!(),
+        // deletion_timestamp: todo!(),
+        // finalizers: todo!(),
+        // generate_name: todo!(),
+        // generation: todo!(),
+        // labels: todo!(),
+        // managed_fields: todo!(),
+        // namespace: todo!(),
+        // owner_references: todo!(),
+        // resource_version: todo!(),
+        // self_link: todo!(),
+        // uid: todo!(),
+        ..metav1::ObjectMeta::default()
     }
 }

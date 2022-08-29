@@ -10,29 +10,8 @@ pub trait PodTemplateSpecExt {
 
 impl PodTemplateSpecExt for corev1::PodTemplateSpec {
     fn new(name: impl ToString) -> Self {
-        let name = Some(name.to_string());
-        let metadata = metav1::ObjectMeta {
-            name,
-            // annotations: todo!(),
-            // cluster_name: todo!(),
-            // creation_timestamp: todo!(),
-            // deletion_grace_period_seconds: todo!(),
-            // deletion_timestamp: todo!(),
-            // finalizers: todo!(),
-            // generate_name: todo!(),
-            // generation: todo!(),
-            // labels: todo!(),
-            // managed_fields: todo!(),
-            // namespace: todo!(),
-            // owner_references: todo!(),
-            // resource_version: todo!(),
-            // self_link: todo!(),
-            // uid: todo!(),
-            ..metav1::ObjectMeta::default()
-        };
-
         Self {
-            metadata: Some(metadata),
+            metadata: Some(metadata(name)),
             spec: None,
         }
     }
