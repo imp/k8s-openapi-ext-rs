@@ -29,7 +29,7 @@ pub trait DaemonSetExt: super::ResourceBuilder {
 
 impl DaemonSetExt for appsv1::DaemonSet {
     fn new(name: impl ToString) -> Self {
-        let metadata = Self::metadata(name);
+        let metadata = metadata(name);
         Self {
             metadata,
             // spec: todo!(),

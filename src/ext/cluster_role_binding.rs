@@ -8,7 +8,7 @@ pub trait ClusterRoleBindingExt: super::ResourceBuilder {
 
 impl ClusterRoleBindingExt for rbacv1::ClusterRoleBinding {
     fn new(name: impl ToString, cluster_role: &rbacv1::ClusterRole) -> Self {
-        let metadata = Self::metadata(name);
+        let metadata = metadata(name);
         let role_ref = rbacv1::RoleRef::new(cluster_role);
         Self {
             metadata,

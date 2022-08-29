@@ -11,7 +11,7 @@ impl RoleBindingExt for rbacv1::RoleBinding {
     where
         T: IsRole,
     {
-        let metadata = Self::metadata(name);
+        let metadata = metadata(name);
         let role_ref = rbacv1::RoleRef {
             api_group: T::GROUP.to_string(),
             kind: T::KIND.to_string(),

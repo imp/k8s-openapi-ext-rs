@@ -21,7 +21,7 @@ pub trait ServiceExt: super::ResourceBuilder {
 
 impl ServiceExt for corev1::Service {
     fn new(name: impl ToString) -> Self {
-        let metadata = Self::metadata(name);
+        let metadata = metadata(name);
         Self {
             metadata,
             // spec: todo!(),

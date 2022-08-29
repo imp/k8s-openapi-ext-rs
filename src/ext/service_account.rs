@@ -12,7 +12,7 @@ pub trait ServiceAccountExt: super::ResourceBuilder {
 
 impl ServiceAccountExt for corev1::ServiceAccount {
     fn new(name: impl ToString) -> Self {
-        let metadata = Self::metadata(name);
+        let metadata = metadata(name);
         Self {
             metadata,
             // automount_service_account_token: todo!(),

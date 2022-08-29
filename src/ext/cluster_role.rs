@@ -10,7 +10,7 @@ pub trait ClusterRoleExt: super::ResourceBuilder {
 
 impl ClusterRoleExt for rbacv1::ClusterRole {
     fn new(name: impl ToString) -> Self {
-        let metadata = Self::metadata(name);
+        let metadata = metadata(name);
         Self {
             metadata,
             // aggregation_rule: todo!(),

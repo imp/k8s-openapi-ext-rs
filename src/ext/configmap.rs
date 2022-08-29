@@ -33,7 +33,7 @@ pub trait ConfigMapExt: ResourceBuilder {
 
 impl ConfigMapExt for corev1::ConfigMap {
     fn new(name: impl ToString) -> Self {
-        let metadata = Self::metadata(name);
+        let metadata = metadata(name);
         Self {
             metadata,
             // binary_data: todo!(),
