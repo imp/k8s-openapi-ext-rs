@@ -36,7 +36,7 @@ impl DeploymentExt for appsv1::Deployment {
             metadata,
             // spec: todo!(),
             // status: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

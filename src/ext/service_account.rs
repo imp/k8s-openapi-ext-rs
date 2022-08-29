@@ -18,7 +18,7 @@ impl ServiceAccountExt for corev1::ServiceAccount {
             // automount_service_account_token: todo!(),
             // image_pull_secrets: todo!(),
             // secrets: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

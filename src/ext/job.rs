@@ -49,7 +49,7 @@ impl JobExt for batchv1::Job {
             metadata,
             // spec: todo!(),
             // status: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

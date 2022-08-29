@@ -14,7 +14,7 @@ impl ClusterRoleBindingExt for rbacv1::ClusterRoleBinding {
             metadata,
             role_ref,
             // subjects: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

@@ -13,7 +13,7 @@ pub trait LabelSelectorExt {
 
 impl LabelSelectorExt for metav1::LabelSelector {
     fn new() -> Self {
-        Self::default()
+        default()
     }
 
     fn all_objects() -> Self {
@@ -41,7 +41,7 @@ impl LabelSelectorExt for metav1::LabelSelector {
         Self {
             match_labels: Some(match_labels),
             // match_expressions: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 }

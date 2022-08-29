@@ -24,7 +24,7 @@ impl SubjectExt for rbacv1::Subject {
             name,
             // api_group: todo!(),
             // namespace: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

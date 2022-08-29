@@ -21,7 +21,7 @@ impl RoleBindingExt for rbacv1::RoleBinding {
             metadata,
             role_ref,
             // subjects: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

@@ -26,7 +26,7 @@ impl ServiceExt for corev1::Service {
             metadata,
             // spec: todo!(),
             // status: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

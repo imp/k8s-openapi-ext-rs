@@ -124,3 +124,7 @@ fn metadata(name: impl ToString) -> metav1::ObjectMeta {
         ..metav1::ObjectMeta::default()
     }
 }
+
+fn default<T: Default>() -> T {
+    Default::default()
+}

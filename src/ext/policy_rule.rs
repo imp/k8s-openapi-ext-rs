@@ -28,7 +28,7 @@ pub trait PolicyRuleExt: Sized {
 
 impl PolicyRuleExt for rbacv1::PolicyRule {
     fn new<T: Resource>() -> Self {
-        Self::default()
+        default::<Self>()
             .api_group(T::GROUP)
             .resource(T::URL_PATH_SEGMENT)
     }

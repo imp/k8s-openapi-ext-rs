@@ -34,7 +34,7 @@ impl DaemonSetExt for appsv1::DaemonSet {
             metadata,
             // spec: todo!(),
             // status: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

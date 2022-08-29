@@ -12,7 +12,7 @@ impl RoleExt for rbacv1::Role {
         Self {
             metadata,
             // rules: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

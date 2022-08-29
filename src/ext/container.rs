@@ -48,7 +48,7 @@ impl ContainerExt for corev1::Container {
             // volume_devices: todo!(),
             // volume_mounts: todo!(),
             // working_dir: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

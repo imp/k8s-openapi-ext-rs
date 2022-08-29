@@ -15,7 +15,7 @@ impl ClusterRoleExt for rbacv1::ClusterRole {
             metadata,
             // aggregation_rule: todo!(),
             // rules: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

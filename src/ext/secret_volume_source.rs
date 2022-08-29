@@ -20,7 +20,7 @@ impl SecretVolumeSourceExt for corev1::SecretVolumeSource {
         let secret_name = Some(name.to_string());
         Self {
             secret_name,
-            ..Self::default()
+            ..default()
         }
     }
 

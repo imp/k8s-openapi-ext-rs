@@ -39,7 +39,7 @@ impl ConfigMapExt for corev1::ConfigMap {
             // binary_data: todo!(),
             // data: todo!(),
             // immutable: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

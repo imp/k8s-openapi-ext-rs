@@ -51,7 +51,7 @@ impl ProbeExt for corev1::Probe {
             // tcp_socket: todo!(),
             // termination_grace_period_seconds: todo!(),
             // timeout_seconds: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 
@@ -63,7 +63,16 @@ impl ProbeExt for corev1::Probe {
         });
         Self {
             tcp_socket,
-            ..Self::default()
+            // exec: todo!(),
+            // failure_threshold: todo!(),
+            // grpc: todo!(),
+            // http_get: todo!(),
+            // initial_delay_seconds: todo!(),
+            // period_seconds: todo!(),
+            // success_threshold: todo!(),
+            // termination_grace_period_seconds: todo!(),
+            // timeout_seconds: todo!(),
+            ..default()
         }
     }
 

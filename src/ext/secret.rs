@@ -89,7 +89,7 @@ impl SecretExt for corev1::Secret {
             // data: todo!(),
             // string_data: todo!(),
             // type_: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 

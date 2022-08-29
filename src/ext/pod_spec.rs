@@ -51,7 +51,7 @@ impl PodSpecExt for corev1::PodSpec {
             // tolerations: todo!(),
             // topology_spread_constraints: todo!(),
             // volumes: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 
@@ -59,7 +59,7 @@ impl PodSpecExt for corev1::PodSpec {
         let containers = Vec::from_iter(containers);
         Self {
             containers,
-            ..Self::default()
+            ..default()
         }
     }
 

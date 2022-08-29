@@ -11,7 +11,7 @@ impl NamespaceExt for corev1::Namespace {
             metadata,
             // spec: todo!(),
             // status: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 }

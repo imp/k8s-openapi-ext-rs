@@ -18,7 +18,7 @@ impl VolumeMountExt for corev1::VolumeMount {
             // read_only: todo!(),
             // sub_path: todo!(),
             // sub_path_expr: todo!(),
-            ..Self::default()
+            ..default()
         }
     }
 
