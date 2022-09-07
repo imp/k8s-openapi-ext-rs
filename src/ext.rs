@@ -57,7 +57,7 @@ mod subject;
 mod volume;
 mod volume_mount;
 
-pub trait ResourceBuilder {
+pub trait ResourceBuilder: Sized {
     fn metadata(name: impl ToString) -> metav1::ObjectMeta {
         metadata(name)
     }
@@ -66,6 +66,42 @@ pub trait ResourceBuilder {
     fn owner(self, owner: metav1::OwnerReference) -> Self;
     fn labels(self, labels: impl IntoIterator<Item = (impl ToString, impl ToString)>) -> Self;
     fn with_resource_version(self, resource_version: String) -> Self;
+
+    /// Set recommended label 'app.kubernetes.io/name'
+    ///
+    fn app_name(self, name: impl ToString) -> Self {
+        self.labels([(labels::APP_NAME, name)])
+    }
+
+    /// Set recommended label 'app.kubernetes.io/instance'
+    ///
+    fn app_instance(self, instance: impl ToString) -> Self {
+        self.labels([(labels::APP_INSTANCE, instance)])
+    }
+
+    /// Set recommended label 'app.kubernetes.io/version'
+    ///
+    fn app_version(self, version: impl ToString) -> Self {
+        self.labels([(labels::APP_VERSION, version)])
+    }
+
+    /// Set recommended label 'app.kubernetes.io/component'
+    ///
+    fn app_component(self, component: impl ToString) -> Self {
+        self.labels([(labels::APP_COMPONENT, component)])
+    }
+
+    /// Set recommended label 'app.kubernetes.io/part-of'
+    ///
+    fn app_part_of(self, part_of: impl ToString) -> Self {
+        self.labels([(labels::APP_PART_OF, part_of)])
+    }
+
+    /// Set recommended label 'app.kubernetes.io/managed-by'
+    ///
+    fn app_managed_by(self, managed_by: impl ToString) -> Self {
+        self.labels([(labels::APP_MANAGED_BY, managed_by)])
+    }
 }
 
 impl<T> ResourceBuilder for T

@@ -58,6 +58,7 @@ pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
 
 mod ext;
+pub mod labels;
 
 pub fn typed_ref(
     object: Option<&corev1::ObjectReference>,
