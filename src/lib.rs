@@ -58,7 +58,21 @@ pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
 
 mod ext;
-pub mod labels;
+
+pub mod namespace {
+    pub const DEFAULT: &str = "default";
+    pub const KUBE_PUBLIC: &str = "kube-public";
+    pub const KUBE_SYSTEM: &str = "kube-system";
+}
+
+pub mod label {
+    pub const APP_NAME: &str = "app.kubernetes.io/name";
+    pub const APP_INSTANCE: &str = "app.kubernetes.io/instance";
+    pub const APP_VERSION: &str = "app.kubernetes.io/version";
+    pub const APP_COMPONENT: &str = "app.kubernetes.io/component";
+    pub const APP_PART_OF: &str = "app.kubernetes.io/part-of";
+    pub const APP_MANAGED_BY: &str = "app.kubernetes.io/managed-by";
+}
 
 pub fn typed_ref(
     object: Option<&corev1::ObjectReference>,

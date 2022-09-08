@@ -70,37 +70,37 @@ pub trait ResourceBuilder: Sized {
     /// Set recommended label 'app.kubernetes.io/name'
     ///
     fn app_name(self, name: impl ToString) -> Self {
-        self.labels([(labels::APP_NAME, name)])
+        self.labels([(label::APP_NAME, name)])
     }
 
     /// Set recommended label 'app.kubernetes.io/instance'
     ///
     fn app_instance(self, instance: impl ToString) -> Self {
-        self.labels([(labels::APP_INSTANCE, instance)])
+        self.labels([(label::APP_INSTANCE, instance)])
     }
 
     /// Set recommended label 'app.kubernetes.io/version'
     ///
     fn app_version(self, version: impl ToString) -> Self {
-        self.labels([(labels::APP_VERSION, version)])
+        self.labels([(label::APP_VERSION, version)])
     }
 
     /// Set recommended label 'app.kubernetes.io/component'
     ///
     fn app_component(self, component: impl ToString) -> Self {
-        self.labels([(labels::APP_COMPONENT, component)])
+        self.labels([(label::APP_COMPONENT, component)])
     }
 
     /// Set recommended label 'app.kubernetes.io/part-of'
     ///
     fn app_part_of(self, part_of: impl ToString) -> Self {
-        self.labels([(labels::APP_PART_OF, part_of)])
+        self.labels([(label::APP_PART_OF, part_of)])
     }
 
     /// Set recommended label 'app.kubernetes.io/managed-by'
     ///
     fn app_managed_by(self, managed_by: impl ToString) -> Self {
-        self.labels([(labels::APP_MANAGED_BY, managed_by)])
+        self.labels([(label::APP_MANAGED_BY, managed_by)])
     }
 }
 
