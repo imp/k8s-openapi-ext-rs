@@ -42,6 +42,7 @@ pub use ext::PodSpecExt;
 pub use ext::PodTemplateSpecExt;
 pub use ext::PolicyRuleExt;
 pub use ext::ProbeExt;
+pub use ext::ReplicaSetExt;
 pub use ext::ResourceBuilder;
 pub use ext::RoleBindingExt;
 pub use ext::RoleExt;
