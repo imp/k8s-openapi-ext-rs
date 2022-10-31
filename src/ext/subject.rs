@@ -1,3 +1,5 @@
+use openapi::Metadata;
+
 use super::*;
 
 pub trait SubjectExt: Sized {
@@ -8,8 +10,9 @@ pub trait SubjectExt: Sized {
     fn group(name: impl ToString) -> Self {
         Self::with_kind(name, "Group")
     }
-    fn service_account(name: impl ToString) -> Self {
-        Self::with_kind(name, "ServiceAccount")
+    fn service_account(account: &corev1::ServiceAccount) -> Self {
+        let name = account.metadata().name.clone().unwrap_or_default();
+        Self::with_kind(name, corev1::ServiceAccount::KIND)
     }
 
     fn namespace(self, namespace: impl ToString) -> Self;
