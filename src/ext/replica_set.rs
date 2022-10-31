@@ -100,9 +100,7 @@ impl ReplicaSetExt for appsv1::ReplicaSet {
 
     fn pod_spec(self, pod_spec: corev1::PodSpec) -> Self {
         let mut spec = self.spec.unwrap_or_default();
-        spec.template
-            .get_or_insert_with(corev1::PodTemplateSpec::default)
-            .spec = Some(pod_spec);
+        spec.template.get_or_insert_with(default).spec = Some(pod_spec);
         Self {
             spec: Some(spec),
             ..self

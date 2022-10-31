@@ -86,7 +86,7 @@ pub fn typed_ref(
     let typed = corev1::TypedLocalObjectReference {
         kind,
         name,
-        ..corev1::TypedLocalObjectReference::default()
+        ..default()
     };
     Some(typed)
 }
@@ -104,4 +104,8 @@ pub fn owner_reference(
         name: owner.name?,
         uid: owner.uid?,
     })
+}
+
+fn default<T: Default>() -> T {
+    Default::default()
 }

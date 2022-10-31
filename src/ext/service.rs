@@ -88,10 +88,7 @@ trait ServiceExtPrivate {
 impl ServiceExtPrivate for corev1::Service {
     fn with_type(name: impl ToString, r#type: impl ToString) -> Self {
         let type_ = Some(r#type.to_string());
-        let spec = corev1::ServiceSpec {
-            type_,
-            ..corev1::ServiceSpec::default()
-        };
+        let spec = corev1::ServiceSpec { type_, ..default() };
         Self::new(name).spec(spec)
     }
 }

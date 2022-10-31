@@ -69,7 +69,7 @@ impl EnvVarExt for corev1::EnvVar {
         };
         let source = corev1::EnvVarSource {
             field_ref: Some(field_ref),
-            ..corev1::EnvVarSource::default()
+            ..default()
         };
         Self {
             name,
@@ -108,7 +108,7 @@ impl ToEnvFrom for corev1::SecretEnvSource {
     fn to_envfrom(self) -> corev1::EnvFromSource {
         corev1::EnvFromSource {
             secret_ref: Some(self),
-            ..corev1::EnvFromSource::default()
+            ..default()
         }
     }
 }
@@ -117,27 +117,7 @@ impl ToEnvFrom for corev1::ConfigMapEnvSource {
     fn to_envfrom(self) -> corev1::EnvFromSource {
         corev1::EnvFromSource {
             config_map_ref: Some(self),
-            ..corev1::EnvFromSource::default()
+            ..default()
         }
     }
 }
-
-// trait EnvVarExtPrivate {
-//     fn config_map_key_ref(name: impl ToString, field_path: impl ToString) -> Self;
-//     fn resource_field_ref(name: impl ToString, field_path: impl ToString) -> Self;
-//     fn secret_key_ref(name: impl ToString, field_path: impl ToString) -> Self;
-// }
-
-// impl EnvVarExtPrivate for corev1::EnvVar {
-//     fn config_map_key_ref(name: impl ToString, field_path: impl ToString) -> Self {
-//         todo!()
-//     }
-
-//     fn resource_field_ref(name: impl ToString, field_path: impl ToString) -> Self {
-//         todo!()
-//     }
-
-//     fn secret_key_ref(name: impl ToString, field_path: impl ToString) -> Self {
-//         todo!()
-//     }
-// }

@@ -161,10 +161,6 @@ fn metadata(name: impl ToString) -> metav1::ObjectMeta {
         // resource_version: todo!(),
         // self_link: todo!(),
         // uid: todo!(),
-        ..metav1::ObjectMeta::default()
+        ..default()
     }
-}
-
-fn default<T: Default>() -> T {
-    Default::default()
 }

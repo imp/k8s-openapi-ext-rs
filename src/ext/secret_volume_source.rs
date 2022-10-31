@@ -41,7 +41,7 @@ impl SecretVolumeSourceExt for corev1::SecretVolumeSource {
                 .map(|(key, path)| corev1::KeyToPath {
                     key: key.to_string(),
                     path: path.to_string(),
-                    ..corev1::KeyToPath::default()
+                    ..default()
                 })
                 .collect(),
         );

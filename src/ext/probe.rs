@@ -39,7 +39,7 @@ impl ProbeExt for corev1::Probe {
             // host: todo!(),
             // http_headers: todo!(),
             // scheme: todo!(),
-            ..corev1::HTTPGetAction::default()
+            ..default()
         });
         Self {
             http_get,
@@ -59,7 +59,7 @@ impl ProbeExt for corev1::Probe {
         let tcp_socket = Some(corev1::TCPSocketAction {
             port: intstr::IntOrString::Int(port.into()),
             // host: todo!(),
-            ..corev1::TCPSocketAction::default()
+            ..default()
         });
         Self {
             tcp_socket,
