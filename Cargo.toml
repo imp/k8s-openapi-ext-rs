@@ -19,6 +19,8 @@ version = "0.17"
 features = ["v1_26"]
 
 [features]
+default = ["quantity"]
+quantity = []
 pedantic = []
 
 [package.metadata.docs.rs]

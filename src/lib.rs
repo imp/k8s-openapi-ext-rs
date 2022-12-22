@@ -22,6 +22,7 @@ pub use openapi::api::events::v1 as eventsv1;
 pub use openapi::api::rbac::v1 as rbacv1;
 pub use openapi::api::storage::v1 as storagev1;
 pub use openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensionsv1;
+pub use openapi::apimachinery::pkg::api::resource;
 pub use openapi::apimachinery::pkg::apis::meta::v1 as metav1;
 pub use openapi::apimachinery::pkg::util::intstr;
 pub use openapi::kube_aggregator::pkg::apis::apiregistration::v1 as apiregistrationv1;
@@ -60,7 +61,22 @@ pub use ext::ToEnvVar;
 pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
 
+#[cfg(feature = "quantity")]
+pub use quantity::BinaryScale;
+#[cfg(feature = "quantity")]
+pub use quantity::DecimalScale;
+#[cfg(feature = "quantity")]
+pub use quantity::Format;
+#[cfg(feature = "quantity")]
+pub use quantity::InvalidQuantity;
+#[cfg(feature = "quantity")]
+pub use quantity::InvalidScale;
+#[cfg(feature = "quantity")]
+pub use quantity::Quantity;
+
 mod ext;
+#[cfg(feature = "quantity")]
+mod quantity;
 
 pub mod namespace {
     pub const DEFAULT: &str = "default";
