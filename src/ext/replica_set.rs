@@ -50,31 +50,19 @@ impl ReplicaSetExt for appsv1::ReplicaSet {
         }
     }
 
-    fn min_ready_seconds(self, seconds: i32) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.min_ready_seconds = Some(seconds);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn min_ready_seconds(mut self, seconds: i32) -> Self {
+        self.spec_mut().min_ready_seconds.replace(seconds);
+        self
     }
 
-    fn replicas(self, replicas: i32) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.replicas = Some(replicas);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn replicas(mut self, replicas: i32) -> Self {
+        self.spec_mut().replicas.replace(replicas);
+        self
     }
 
-    fn selector(self, selector: metav1::LabelSelector) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.selector = selector;
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn selector(mut self, selector: metav1::LabelSelector) -> Self {
+        self.spec_mut().selector = selector;
+        self
     }
 
     fn match_labels(
@@ -89,21 +77,25 @@ impl ReplicaSetExt for appsv1::ReplicaSet {
         }
     }
 
-    fn template(self, template: corev1::PodTemplateSpec) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.template = Some(template);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn template(mut self, template: corev1::PodTemplateSpec) -> Self {
+        self.spec_mut().template.replace(template);
+        self
     }
 
-    fn pod_spec(self, pod_spec: corev1::PodSpec) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.template.get_or_insert_with(default).spec = Some(pod_spec);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn pod_spec(mut self, pod_spec: corev1::PodSpec) -> Self {
+        self.spec_mut()
+            .template
+            .get_or_insert_with(default)
+            .spec
+            .replace(pod_spec);
+        self
+    }
+}
+
+impl HasSpec for appsv1::ReplicaSet {
+    type Spec = appsv1::ReplicaSetSpec;
+
+    fn spec_mut(&mut self) -> &mut Self::Spec {
+        self.spec.get_or_insert_with(default)
     }
 }

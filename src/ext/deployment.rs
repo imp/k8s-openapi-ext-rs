@@ -47,49 +47,29 @@ impl DeploymentExt for appsv1::Deployment {
         Self::new(name).labels(labels)
     }
 
-    fn paused(self, yes: bool) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.paused = Some(yes);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn paused(mut self, yes: bool) -> Self {
+        self.spec_mut().paused.replace(yes);
+        self
     }
 
-    fn progress_deadline_seconds(self, seconds: i32) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.progress_deadline_seconds = Some(seconds);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn progress_deadline_seconds(mut self, seconds: i32) -> Self {
+        self.spec_mut().progress_deadline_seconds.replace(seconds);
+        self
     }
 
-    fn replicas(self, replicas: i32) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.replicas = Some(replicas);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn replicas(mut self, replicas: i32) -> Self {
+        self.spec_mut().replicas.replace(replicas);
+        self
     }
 
-    fn revision_history_limit(self, limit: i32) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.revision_history_limit = Some(limit);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn revision_history_limit(mut self, limit: i32) -> Self {
+        self.spec_mut().revision_history_limit.replace(limit);
+        self
     }
 
-    fn selector(self, selector: metav1::LabelSelector) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.selector = selector;
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn selector(mut self, selector: metav1::LabelSelector) -> Self {
+        self.spec_mut().selector = selector;
+        self
     }
 
     fn match_labels(
@@ -104,30 +84,26 @@ impl DeploymentExt for appsv1::Deployment {
         }
     }
 
-    fn strategy(self, strategy: appsv1::DeploymentStrategy) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.strategy = Some(strategy);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn strategy(mut self, strategy: appsv1::DeploymentStrategy) -> Self {
+        self.spec_mut().strategy.replace(strategy);
+        self
     }
 
-    fn template(self, template: corev1::PodTemplateSpec) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.template = template;
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn template(mut self, template: corev1::PodTemplateSpec) -> Self {
+        self.spec_mut().template = template;
+        self
     }
 
-    fn pod(self, pod_spec: corev1::PodSpec) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.template.spec = Some(pod_spec);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+    fn pod(mut self, pod_spec: corev1::PodSpec) -> Self {
+        self.spec_mut().template.spec.replace(pod_spec);
+        self
+    }
+}
+
+impl HasSpec for appsv1::Deployment {
+    type Spec = appsv1::DeploymentSpec;
+
+    fn spec_mut(&mut self) -> &mut Self::Spec {
+        self.spec.get_or_insert_with(default)
     }
 }

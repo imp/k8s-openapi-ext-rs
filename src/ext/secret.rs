@@ -139,11 +139,9 @@ mod tests {
         let secret = <corev1::Secret as SecretExt>::image_pull_secret(
             "name", "registry", "username", "password",
         );
-        // println!("{secret:#?}");
         let string_data = secret.string_data.unwrap_or_default();
         assert_eq!(string_data.len(), 1);
         let config: json::Value = json::from_str(&string_data[DOCKER_CONFIG_JSON_KEY]).unwrap();
-        // println!("{config:#?}");
         assert!(config.is_object());
     }
 

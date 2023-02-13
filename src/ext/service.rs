@@ -37,13 +37,12 @@ impl ServiceExt for corev1::Service {
         name: impl ToString,
         ports: impl IntoIterator<Item = corev1::ServicePort>,
     ) -> Self {
-        let service = Self::with_type(name, "ClusterIP");
-        let mut spec = service.spec.unwrap_or_default();
-        spec.ports = Some(ports.into_iter().collect());
-        Self {
-            spec: Some(spec),
-            ..service
-        }
+        let mut service = Self::with_type(name, "ClusterIP");
+        service
+            .spec_mut()
+            .ports
+            .replace(ports.into_iter().collect());
+        service
     }
 
     fn node_port(name: impl ToString) -> Self {
@@ -55,13 +54,12 @@ impl ServiceExt for corev1::Service {
     }
 
     fn external_name(name: impl ToString, external_name: impl ToString) -> Self {
-        let service = Self::with_type(name, "ExternalName");
-        let mut spec = service.spec.unwrap_or_default();
-        spec.external_name = Some(external_name.to_string());
-        Self {
-            spec: Some(spec),
-            ..service
-        }
+        let mut service = Self::with_type(name, "ExternalName");
+        service
+            .spec_mut()
+            .external_name
+            .replace(external_name.to_string());
+        service
     }
 
     fn with_labels(
@@ -78,18 +76,16 @@ impl ServiceExt for corev1::Service {
         }
     }
 
-    fn selector(self, labels: impl IntoIterator<Item = (impl ToString, impl ToString)>) -> Self {
+    fn selector(
+        mut self,
+        labels: impl IntoIterator<Item = (impl ToString, impl ToString)>,
+    ) -> Self {
         let labels = labels
             .into_iter()
             .map(|(key, value)| (key.to_string(), value.to_string()))
             .collect();
-
-        let mut spec = self.spec.unwrap_or_default();
-        spec.selector = Some(labels);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+        self.spec_mut().selector.replace(labels);
+        self
     }
 }
 
@@ -102,5 +98,13 @@ impl ServiceExtPrivate for corev1::Service {
         let type_ = Some(r#type.to_string());
         let spec = corev1::ServiceSpec { type_, ..default() };
         Self::new(name).spec(spec)
+    }
+}
+
+impl HasSpec for corev1::Service {
+    type Spec = corev1::ServiceSpec;
+
+    fn spec_mut(&mut self) -> &mut Self::Spec {
+        self.spec.get_or_insert_with(default)
     }
 }
