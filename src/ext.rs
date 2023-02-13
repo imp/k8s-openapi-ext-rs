@@ -166,3 +166,8 @@ fn metadata(name: impl ToString) -> metav1::ObjectMeta {
         ..default()
     }
 }
+
+trait HasSpec {
+    type Spec;
+    fn spec_mut(&mut self) -> &mut Self::Spec;
+}
