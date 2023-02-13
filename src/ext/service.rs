@@ -2,7 +2,10 @@ use super::*;
 
 pub trait ServiceExt: super::ResourceBuilder {
     fn new(name: impl ToString) -> Self;
-    fn cluster_ip(name: impl ToString) -> Self;
+    fn cluster_ip(
+        name: impl ToString,
+        ports: impl IntoIterator<Item = corev1::ServicePort>,
+    ) -> Self;
     fn node_port(name: impl ToString) -> Self;
     fn load_balancer(name: impl ToString) -> Self;
     fn external_name(name: impl ToString, external_name: impl ToString) -> Self;
@@ -30,8 +33,17 @@ impl ServiceExt for corev1::Service {
         }
     }
 
-    fn cluster_ip(name: impl ToString) -> Self {
-        Self::with_type(name, "ClusterIP")
+    fn cluster_ip(
+        name: impl ToString,
+        ports: impl IntoIterator<Item = corev1::ServicePort>,
+    ) -> Self {
+        let service = Self::with_type(name, "ClusterIP");
+        let mut spec = service.spec.unwrap_or_default();
+        spec.ports = Some(ports.into_iter().collect());
+        Self {
+            spec: Some(spec),
+            ..service
+        }
     }
 
     fn node_port(name: impl ToString) -> Self {

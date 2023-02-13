@@ -58,6 +58,7 @@ pub use ext::SecretExt2;
 pub use ext::SecretVolumeSourceExt;
 pub use ext::ServiceAccountExt;
 pub use ext::ServiceExt;
+pub use ext::ServicePortExt;
 pub use ext::StorageClassExt;
 pub use ext::SubjectExt;
 pub use ext::ToEnvFrom;
