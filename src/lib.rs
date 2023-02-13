@@ -16,10 +16,15 @@
 pub use k8s_openapi as openapi;
 
 pub use openapi::api::apps::v1 as appsv1;
+pub use openapi::api::autoscaling::v1 as autoscalingv1;
+pub use openapi::api::autoscaling::v2 as autoscalingv2;
 pub use openapi::api::batch::v1 as batchv1;
+pub use openapi::api::coordination::v1 as coordinationv1;
 pub use openapi::api::core::v1 as corev1;
 pub use openapi::api::events::v1 as eventsv1;
+pub use openapi::api::policy::v1 as policyv1;
 pub use openapi::api::rbac::v1 as rbacv1;
+pub use openapi::api::scheduling::v1 as schedulingv1;
 pub use openapi::api::storage::v1 as storagev1;
 pub use openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensionsv1;
 pub use openapi::apimachinery::pkg::apis::meta::v1 as metav1;
