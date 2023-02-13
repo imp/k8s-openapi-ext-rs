@@ -71,10 +71,10 @@ impl ConfigMapExt for corev1::ConfigMap {
     }
 
     fn data_mut(&mut self) -> &mut BTreeMap<String, String> {
-        self.data.get_or_insert_with(BTreeMap::new)
+        self.data.get_or_insert_with(default)
     }
 
     fn binary_data_mut(&mut self) -> &mut BTreeMap<String, ByteString> {
-        self.binary_data.get_or_insert_with(BTreeMap::new)
+        self.binary_data.get_or_insert_with(default)
     }
 }

@@ -123,7 +123,7 @@ where
     fn owner(mut self, owner: metav1::OwnerReference) -> Self {
         self.metadata_mut()
             .owner_references
-            .get_or_insert_with(Vec::new)
+            .get_or_insert_with(default)
             .push(owner);
         self
     }
@@ -134,7 +134,7 @@ where
             .map(|(key, value)| (key.to_string(), value.to_string()));
         self.metadata_mut()
             .labels
-            .get_or_insert_with(BTreeMap::new)
+            .get_or_insert_with(default)
             .extend(labels);
         self
     }
