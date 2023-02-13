@@ -17,6 +17,16 @@ pub trait ContainerExt {
 
     fn readiness_probe(self, probe: corev1::Probe) -> Self;
 
+    fn resource_limits(
+        self,
+        limits: impl IntoIterator<Item = (String, resource::Quantity)>,
+    ) -> Self;
+
+    fn resource_requests(
+        self,
+        requests: impl IntoIterator<Item = (String, resource::Quantity)>,
+    ) -> Self;
+
     fn startup_probe(self, probe: corev1::Probe) -> Self;
 
     fn volume_mounts(self, volume_mounts: impl IntoIterator<Item = corev1::VolumeMount>) -> Self;
@@ -94,6 +104,31 @@ impl ContainerExt for corev1::Container {
 
     fn readiness_probe(mut self, probe: corev1::Probe) -> Self {
         self.readiness_probe = Some(probe);
+        self
+    }
+
+    fn resource_limits(
+        mut self,
+        limits: impl IntoIterator<Item = (String, resource::Quantity)>,
+    ) -> Self {
+        self.resources
+            .get_or_insert_with(default)
+            .limits
+            .get_or_insert_with(default)
+            .extend(limits);
+        self
+    }
+
+    fn resource_requests(
+        mut self,
+        requests: impl IntoIterator<Item = (String, resource::Quantity)>,
+    ) -> Self {
+        self.resources
+            .get_or_insert_with(default)
+            .requests
+            .get_or_insert_with(default)
+            .extend(requests);
+
         self
     }
 

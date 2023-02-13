@@ -27,6 +27,7 @@ pub use openapi::api::rbac::v1 as rbacv1;
 pub use openapi::api::scheduling::v1 as schedulingv1;
 pub use openapi::api::storage::v1 as storagev1;
 pub use openapi::apiextensions_apiserver::pkg::apis::apiextensions::v1 as apiextensionsv1;
+pub use openapi::apimachinery::pkg::api::resource;
 pub use openapi::apimachinery::pkg::apis::meta::v1 as metav1;
 pub use openapi::apimachinery::pkg::util::intstr;
 pub use openapi::kube_aggregator::pkg::apis::apiregistration::v1 as apiregistrationv1;
