@@ -42,7 +42,8 @@ pub trait SecretExt: super::ResourceBuilder + Sized {
         let username = username.to_string();
         let password = password.to_string();
         let auth = format!("{username}:{password}");
-        let auth = base64::encode(auth);
+        let auth =
+            base64::display::Base64Display::new(auth.as_bytes(), &base64::prelude::BASE64_STANDARD);
         let config = format!(
             r#"{{"auths":{{"{registry}":{{"username":"{username}","password":"{password}","auth":"{auth}"}}}}}}"#
         );
