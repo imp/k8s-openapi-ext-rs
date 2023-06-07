@@ -43,6 +43,7 @@ pub use ext::DeploymentExt;
 pub use ext::EnvVarExt;
 pub use ext::JobExt;
 pub use ext::LabelSelectorExt;
+pub use ext::LocalObjectReferenceExt;
 pub use ext::NamespaceExt;
 pub use ext::PodSpecExt;
 pub use ext::PodTemplateSpecExt;
