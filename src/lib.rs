@@ -99,6 +99,10 @@ pub fn typed_ref(
     Some(typed)
 }
 
+pub fn local_ref(object: &corev1::ObjectReference) -> Option<corev1::LocalObjectReference> {
+    object.name.as_ref().map(corev1::LocalObjectReference::new)
+}
+
 pub fn owner_reference(
     owner: corev1::ObjectReference,
     is_controller: bool,
