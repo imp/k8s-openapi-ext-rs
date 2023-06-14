@@ -26,6 +26,7 @@ pub use role_ref::RoleRefExt;
 pub use secret::SecretExt;
 pub use secret::SecretExt2;
 pub use secret_env_source::SecretEnvSourceExt;
+pub use secret_reference::SecretReferenceExt;
 pub use secret_volume_source::SecretVolumeSourceExt;
 pub use service::ServiceExt;
 pub use service_account::ServiceAccountExt;
@@ -34,6 +35,10 @@ pub use storage_class::StorageClassExt;
 pub use subject::SubjectExt;
 pub use volume::VolumeExt;
 pub use volume_mount::VolumeMountExt;
+
+openapi::k8s_if_ge_1_26! {
+pub use typed_object_reference::TypedObjectReferenceExt;
+}
 
 mod cluster_role;
 mod cluster_role_binding;
@@ -56,6 +61,7 @@ mod role_binding;
 mod role_ref;
 mod secret;
 mod secret_env_source;
+mod secret_reference;
 mod secret_volume_source;
 mod service;
 mod service_account;
@@ -64,6 +70,10 @@ mod storage_class;
 mod subject;
 mod volume;
 mod volume_mount;
+
+openapi::k8s_if_ge_1_26! {
+mod typed_object_reference;
+}
 
 pub trait ResourceBuilder: Sized {
     fn metadata(name: impl ToString) -> metav1::ObjectMeta {

@@ -32,6 +32,7 @@ pub use openapi::apimachinery::pkg::apis::meta::v1 as metav1;
 pub use openapi::apimachinery::pkg::util::intstr;
 pub use openapi::kube_aggregator::pkg::apis::apiregistration::v1 as apiregistrationv1;
 pub use openapi::ByteString;
+pub use openapi::Metadata;
 pub use openapi::Resource;
 
 pub use ext::ClusterRoleBindingExt;
@@ -57,6 +58,7 @@ pub use ext::RoleRefExt;
 pub use ext::SecretEnvSourceExt;
 pub use ext::SecretExt;
 pub use ext::SecretExt2;
+pub use ext::SecretReferenceExt;
 pub use ext::SecretVolumeSourceExt;
 pub use ext::ServiceAccountExt;
 pub use ext::ServiceExt;
@@ -67,6 +69,10 @@ pub use ext::ToEnvFrom;
 pub use ext::ToEnvVar;
 pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
+
+openapi::k8s_if_ge_1_26! {
+pub use ext::TypedObjectReferenceExt;
+}
 
 mod ext;
 
