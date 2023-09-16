@@ -1,5 +1,5 @@
 build:
-    cargo build --workspace --all-targets --features k8s-openapi/v1_27
+    cargo build --workspace --all-targets --features k8s-openapi/v1_28
 
 static:
     cargo build --target x86_64-unknown-linux-musl
@@ -11,13 +11,13 @@ test:
     cargo test --workspace -- --report-time -Z unstable-options
 
 clippy:
-    cargo clippy --workspace --all-targets  --features k8s-openapi/v1_27
+    cargo clippy --workspace --all-targets  --features k8s-openapi/v1_28
 
 c:
     cargo c
 
 pedantic:
-    cargo clippy --workspace --all-targets --features pedantic --features k8s-openapi/v1_27
+    cargo clippy --workspace --all-targets --features pedantic --features k8s-openapi/v1_28
 
 update:
     cargo update
