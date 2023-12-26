@@ -39,6 +39,7 @@ pub use ext::ClusterRoleBindingExt;
 pub use ext::ClusterRoleExt;
 pub use ext::ConfigMapExt;
 pub use ext::ContainerExt;
+pub use ext::CronJobExt;
 pub use ext::DaemonSetExt;
 pub use ext::DeploymentExt;
 pub use ext::EnvVarExt;
