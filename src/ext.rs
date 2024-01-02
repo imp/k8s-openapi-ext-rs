@@ -82,9 +82,23 @@ pub trait ResourceBuilder: Sized {
         metadata(name)
     }
 
+    /// Set namespace for this object
+    ///
     fn namespace(self, namespace: impl ToString) -> Self;
+
+    /// Set the owner for this object
+    ///
     fn owner(self, owner: metav1::OwnerReference) -> Self;
+
+    /// Set one label for this object.
+    /// For settins multiple lables at once prefer `labels()`
+    ///
+    fn label(self, key: impl ToString, value: impl ToString) -> Self;
+
+    /// Set labels for this object
+    ///
     fn labels(self, labels: impl IntoIterator<Item = (impl ToString, impl ToString)>) -> Self;
+
     fn with_resource_version(self, resource_version: String) -> Self;
 
     /// Set recommended label 'app.kubernetes.io/name'
@@ -139,6 +153,14 @@ where
             .owner_references
             .get_or_insert_with(default)
             .push(owner);
+        self
+    }
+
+    fn label(mut self, key: impl ToString, value: impl ToString) -> Self {
+        self.metadata_mut()
+            .labels
+            .get_or_insert_with(default)
+            .insert(key.to_string(), value.to_string());
         self
     }
 
