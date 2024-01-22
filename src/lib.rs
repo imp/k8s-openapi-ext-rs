@@ -43,6 +43,7 @@ pub use ext::CronJobExt;
 pub use ext::DaemonSetExt;
 pub use ext::DeploymentExt;
 pub use ext::EnvVarExt;
+pub use ext::HorizontalPodAutoscalerExt;
 pub use ext::JobExt;
 pub use ext::LabelSelectorExt;
 pub use ext::LocalObjectReferenceExt;
@@ -68,6 +69,8 @@ pub use ext::StorageClassExt;
 pub use ext::SubjectExt;
 pub use ext::ToEnvFrom;
 pub use ext::ToEnvVar;
+pub use ext::TolerationBuilder;
+pub use ext::TolerationExt;
 pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
 
