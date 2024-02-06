@@ -10,7 +10,7 @@ license = "Apache-2.0"
 
 [dependencies]
 base64 = "0.21"
-k8s-openapi = { version = "0.20", features = [] }
+k8s-openapi = { version = "0.21", features = [] }
 
 
 [dev-dependencies]
@@ -18,8 +18,8 @@ serde_json = "1.0"
 
 
 [dev-dependencies.k8s-openapi]
-version = "0.20"
-features = ["v1_28"]
+version = "0.21"
+features = ["latest"]
 
 
 [features]
@@ -27,4 +27,4 @@ pedantic = []
 
 
 [package.metadata.docs.rs]
-features = ["k8s-openapi/v1_28"]
+features = ["k8s-openapi/latest"]
