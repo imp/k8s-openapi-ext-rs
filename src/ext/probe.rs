@@ -2,13 +2,17 @@ use std::path::Path;
 
 use super::*;
 
-/// Builders for `corev1::EnvVar` objects
+/// Builders for `corev1::Probe` objects
 pub trait ProbeExt {
     /// HTTP get probe
     fn http_get(path: impl AsRef<Path>, port: u16) -> Self;
 
     /// TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported
     fn tcp_socket(port: u16) -> Self;
+
+    /// gRPC probe
+    ///
+    fn grpc<'a>(port: i32, service: impl Into<Option<&'a str>>) -> Self;
 
     /// Minimum consecutive failures for the probe to be considered failed after having succeeded.
     /// Defaults to 3. Minimum value is 1.
@@ -70,6 +74,24 @@ impl ProbeExt for corev1::Probe {
             // initial_delay_seconds: todo!(),
             // period_seconds: todo!(),
             // success_threshold: todo!(),
+            // termination_grace_period_seconds: todo!(),
+            // timeout_seconds: todo!(),
+            ..default()
+        }
+    }
+
+    fn grpc<'a>(port: i32, service: impl Into<Option<&'a str>>) -> Self {
+        let service = service.into().map(|service| service.to_string());
+        let grpc = Some(corev1::GRPCAction { port, service });
+        Self {
+            grpc,
+            // exec: todo!(),
+            // failure_threshold: todo!(),
+            // http_get: todo!(),
+            // initial_delay_seconds: todo!(),
+            // period_seconds: todo!(),
+            // success_threshold: todo!(),
+            // tcp_socket: todo!(),
             // termination_grace_period_seconds: todo!(),
             // timeout_seconds: todo!(),
             ..default()

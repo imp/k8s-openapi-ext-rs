@@ -1,5 +1,3 @@
-use openapi::Metadata;
-
 use super::*;
 
 pub trait SubjectExt: Sized {
