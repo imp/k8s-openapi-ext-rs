@@ -95,6 +95,7 @@ pub mod label {
     pub const APP_COMPONENT: &str = "app.kubernetes.io/component";
     pub const APP_PART_OF: &str = "app.kubernetes.io/part-of";
     pub const APP_MANAGED_BY: &str = "app.kubernetes.io/managed-by";
+    pub const DEFAULT_DEPLOYMENT_UNIQUE_LABEL_KEY: &str = "pod-template-hash";
 }
 
 pub fn typed_ref(
