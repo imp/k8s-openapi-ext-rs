@@ -1,13 +1,15 @@
 use super::*;
 
 pub trait RoleBindingExt: super::ResourceBuilder {
-    fn new<T: IsRole>(name: impl ToString, role: &T) -> Self;
+    fn new<T>(name: impl ToString, role: &T) -> Self
+    where
+        T: IsRole;
 
     fn subjects(self, subjects: impl IntoIterator<Item = rbacv1::Subject>) -> Self;
 }
 
 impl RoleBindingExt for rbacv1::RoleBinding {
-    fn new<T: IsRole>(name: impl ToString, role: &T) -> Self
+    fn new<T>(name: impl ToString, role: &T) -> Self
     where
         T: IsRole,
     {
