@@ -49,6 +49,7 @@ pub use ext::LabelSelectorExt;
 pub use ext::LocalObjectReferenceExt;
 pub use ext::MetricExt;
 pub use ext::NamespaceExt;
+pub use ext::NodeExt;
 pub use ext::OwnerReferenceExt;
 pub use ext::PodSpecExt;
 pub use ext::PodTemplateSpecExt;
