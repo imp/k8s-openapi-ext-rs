@@ -70,6 +70,8 @@ pub use ext::ServiceExt;
 pub use ext::ServicePortExt;
 pub use ext::StorageClassExt;
 pub use ext::SubjectExt;
+pub use ext::TaintExt;
+pub use ext::TimeExt;
 pub use ext::ToEnvFrom;
 pub use ext::ToEnvVar;
 pub use ext::TolerationBuilder;
