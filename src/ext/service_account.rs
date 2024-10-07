@@ -31,8 +31,7 @@ impl ServiceAccountExt for corev1::ServiceAccount {
     }
 
     fn image_pull_secret(self, name: impl ToString) -> Self {
-        let name = Some(name.to_string());
-        let secret = corev1::LocalObjectReference { name };
+        let secret = corev1::LocalObjectReference::new(name);
         let image_pull_secrets = Some(vec![secret]);
         Self {
             image_pull_secrets,
@@ -43,8 +42,7 @@ impl ServiceAccountExt for corev1::ServiceAccount {
     fn image_pull_secrets(self, secrets: impl IntoIterator<Item = impl ToString>) -> Self {
         let secrets = secrets
             .into_iter()
-            .map(|secret| Some(secret.to_string()))
-            .map(|name| corev1::LocalObjectReference { name })
+            .map(corev1::LocalObjectReference::new)
             .collect();
         let image_pull_secrets = Some(secrets);
         Self {

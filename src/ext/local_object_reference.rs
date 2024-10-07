@@ -6,7 +6,7 @@ pub trait LocalObjectReferenceExt {
 
 impl LocalObjectReferenceExt for corev1::LocalObjectReference {
     fn new(name: impl ToString) -> Self {
-        let name = Some(name.to_string());
+        let name = name.to_string();
         Self { name }
     }
 }

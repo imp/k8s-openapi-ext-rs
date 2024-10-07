@@ -72,11 +72,10 @@ impl PodSpecExt for corev1::PodSpec {
     }
 
     fn image_pull_secret(self, name: impl ToString) -> Self {
-        let image_pull_secret_name = Some(name.to_string());
+        let image_pull_secret_name = corev1::LocalObjectReference::new(name);
+        let image_pull_secrets = Some(vec![image_pull_secret_name]);
         Self {
-            image_pull_secrets: Some(vec![corev1::LocalObjectReference {
-                name: image_pull_secret_name,
-            }]),
+            image_pull_secrets,
             ..self
         }
     }
