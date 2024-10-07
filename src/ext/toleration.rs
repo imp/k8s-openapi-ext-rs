@@ -1,5 +1,3 @@
-use std::fmt;
-
 use super::*;
 
 pub trait TolerationExt {
@@ -62,29 +60,6 @@ impl TolerationBuilder {
             toleration_seconds: None,
             value: None,
         }
-    }
-}
-
-#[derive(Debug)]
-enum Effect {
-    NoSchedule,
-    PreferNoSchedule,
-    NoExecute,
-}
-
-impl Effect {
-    fn as_str(&self) -> &'static str {
-        match self {
-            Self::NoSchedule => "NoSchedule",
-            Self::PreferNoSchedule => "PreferNoSchedule",
-            Self::NoExecute => "NoExecute",
-        }
-    }
-}
-
-impl fmt::Display for Effect {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.as_str().fmt(f)
     }
 }
 

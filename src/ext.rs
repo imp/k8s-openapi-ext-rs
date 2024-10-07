@@ -1,4 +1,5 @@
 use std::collections::BTreeMap;
+use std::fmt;
 
 use super::*;
 
@@ -42,6 +43,8 @@ pub use toleration::TolerationExt;
 pub use volume::VolumeExt;
 pub use volume_mount::VolumeMountExt;
 
+use effect::Effect;
+
 openapi::k8s_if_ge_1_26! {
 pub use typed_object_reference::TypedObjectReferenceExt;
 }
@@ -53,6 +56,7 @@ mod container;
 mod cronjob;
 mod daemon_set;
 mod deployment;
+mod effect;
 mod env;
 mod hpa;
 mod job;

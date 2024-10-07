@@ -91,8 +91,8 @@ impl ToEnvVar for corev1::EnvVar {
 
 impl<T, U> ToEnvVar for (T, U)
 where
-    T: std::fmt::Display,
-    U: std::fmt::Display,
+    T: fmt::Display,
+    U: fmt::Display,
 {
     fn to_envvar(&self) -> corev1::EnvVar {
         let (ref name, ref value) = *self;
