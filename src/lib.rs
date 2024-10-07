@@ -51,6 +51,7 @@ pub use ext::MetricExt;
 pub use ext::NamespaceExt;
 pub use ext::NodeExt;
 pub use ext::OwnerReferenceExt;
+pub use ext::PodExt;
 pub use ext::PodSpecExt;
 pub use ext::PodTemplateSpecExt;
 pub use ext::PolicyRuleExt;
