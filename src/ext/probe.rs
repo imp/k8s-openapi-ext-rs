@@ -16,12 +16,12 @@ pub trait ProbeExt {
 
     /// Minimum consecutive failures for the probe to be considered failed after having succeeded.
     /// Defaults to 3. Minimum value is 1.
-
+    ///
     fn failure_threshold(self, threshold: i32) -> Self;
 
     /// Minimum consecutive successes for the probe to be considered successful after having failed.
     /// Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1.
-
+    ///
     fn success_threshold(self, threshold: i32) -> Self;
 
     fn initial_delay_seconds(self, seconds: i32) -> Self;
