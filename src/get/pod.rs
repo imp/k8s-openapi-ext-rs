@@ -1,5 +1,9 @@
 use super::*;
 
+pub use condition::PodConditionGetExt;
+
+mod condition;
+
 pub trait PodGetExt {
     fn spec(&self) -> Option<&corev1::PodSpec>;
 

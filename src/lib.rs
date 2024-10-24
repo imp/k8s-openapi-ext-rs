@@ -85,6 +85,8 @@ pub use get::ContainerStatusGetExt;
 pub use get::DeploymentGetExt;
 pub use get::PodConditionGetExt;
 pub use get::PodGetExt;
+pub use get::ReplicaSetConditionGetExt;
+pub use get::ReplicaSetGetExt;
 
 openapi::k8s_if_ge_1_26! {
 pub use ext::TypedObjectReferenceExt;
