@@ -9,6 +9,7 @@
 #![warn(missing_debug_implementations)]
 #![warn(rust_2018_compatibility)]
 #![warn(rust_2021_compatibility)]
+#![warn(rust_2024_compatibility)]
 #![warn(rust_2018_idioms)]
 #![warn(unused)]
 #![deny(warnings)]
@@ -79,12 +80,18 @@ pub use ext::TolerationBuilder;
 pub use ext::TolerationExt;
 pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
+pub use get::ContainerGetExt;
+pub use get::ContainerStatusGetExt;
+pub use get::DeploymentGetExt;
+pub use get::PodConditionGetExt;
+pub use get::PodGetExt;
 
 openapi::k8s_if_ge_1_26! {
 pub use ext::TypedObjectReferenceExt;
 }
 
 mod ext;
+mod get;
 
 pub mod namespace {
     pub const DEFAULT: &str = "default";
