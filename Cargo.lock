@@ -124,7 +124,7 @@ dependencies = [
 
 [[package]]
 name = "k8s-openapi-ext"
-version = "0.0.37"
+version = "0.0.38"
 dependencies = [
  "base64",
  "chrono",
