@@ -14,6 +14,26 @@ pub trait PodGetExt {
         self.spec().map(|spec| spec.containers.as_ref())
     }
 
+    fn ephemeral_containers(&self) -> Option<&[corev1::EphemeralContainer]> {
+        self.spec()?.ephemeral_containers.as_deref()
+    }
+
+    fn init_containers(&self) -> Option<&[corev1::Container]> {
+        self.spec()?.init_containers.as_deref()
+    }
+
+    fn node_selector(&self) -> Option<&BTreeMap<String, String>> {
+        self.spec()?.node_selector.as_ref()
+    }
+
+    fn resource_claims(&self) -> Option<&[corev1::PodResourceClaim]> {
+        self.spec()?.resource_claims.as_deref()
+    }
+
+    fn tolerations(&self) -> Option<&[corev1::Toleration]> {
+        self.spec()?.tolerations.as_deref()
+    }
+
     // From status
     fn message(&self) -> Option<&str> {
         self.status()?.message.as_deref()

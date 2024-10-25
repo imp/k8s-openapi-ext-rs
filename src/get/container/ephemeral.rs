@@ -1,14 +1,7 @@
 use super::*;
 
-pub use ephemeral::EphemeralContainerGetExt;
-pub use status::ContainerStatusGetExt;
-
-mod ephemeral;
-mod status;
-
-pub trait ContainerGetExt {
-    fn myself(&self) -> &corev1::Container;
-
+pub trait EphemeralContainerGetExt {
+    fn myself(&self) -> &corev1::EphemeralContainer;
     fn name(&self) -> &str {
         &self.myself().name
     }
@@ -40,9 +33,9 @@ pub trait ContainerGetExt {
     }
 }
 
-impl ContainerGetExt for corev1::Container {
+impl EphemeralContainerGetExt for corev1::EphemeralContainer {
     #[inline(always)]
-    fn myself(&self) -> &corev1::Container {
+    fn myself(&self) -> &corev1::EphemeralContainer {
         self
     }
 }
