@@ -85,6 +85,7 @@ pub use get::ContainerGetExt;
 pub use get::ContainerStatusGetExt;
 pub use get::DeploymentGetExt;
 pub use get::EphemeralContainerGetExt;
+pub use get::NamespaceGetExt;
 pub use get::PodConditionGetExt;
 pub use get::PodGetExt;
 pub use get::ReplicaSetConditionGetExt;
