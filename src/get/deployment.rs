@@ -71,6 +71,18 @@ pub trait DeploymentGetExt {
     fn observed_generation(&self) -> Option<i64> {
         self.status()?.observed_generation
     }
+
+    // Shortcuts
+    fn containers(&self) -> Option<&[corev1::Container]> {
+        self.template()?.containers()
+    }
+
+    fn port_by_name(&self, name: impl AsRef<str>) -> Option<&corev1::ContainerPort> {
+        let name = name.as_ref();
+        self.containers()?
+            .iter()
+            .find_map(|container| container.port_by_name(name))
+    }
 }
 
 impl DeploymentGetExt for appsv1::Deployment {

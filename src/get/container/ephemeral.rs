@@ -26,7 +26,8 @@ pub trait EphemeralContainerGetExt {
         self.myself().resources.as_ref()
     }
 
-    fn port_by_name(&self, name: &str) -> Option<&corev1::ContainerPort> {
+    fn port_by_name(&self, name: impl AsRef<str>) -> Option<&corev1::ContainerPort> {
+        let name = name.as_ref();
         self.ports()?
             .iter()
             .find(|port| port.name.as_deref() == Some(name))
