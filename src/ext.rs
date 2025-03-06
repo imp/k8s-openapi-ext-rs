@@ -44,14 +44,11 @@ pub use taint::TaintExt;
 pub use time::TimeExt;
 pub use toleration::TolerationBuilder;
 pub use toleration::TolerationExt;
+pub use typed_object_reference::TypedObjectReferenceExt;
 pub use volume::VolumeExt;
 pub use volume_mount::VolumeMountExt;
 
 use effect::Effect;
-
-openapi::k8s_if_ge_1_26! {
-pub use typed_object_reference::TypedObjectReferenceExt;
-}
 
 mod cluster_role;
 mod cluster_role_binding;
@@ -91,12 +88,9 @@ mod subject;
 mod taint;
 mod time;
 mod toleration;
+mod typed_object_reference;
 mod volume;
 mod volume_mount;
-
-openapi::k8s_if_ge_1_26! {
-mod typed_object_reference;
-}
 
 pub trait ResourceBuilder: Sized {
     fn metadata(name: impl ToString) -> metav1::ObjectMeta {

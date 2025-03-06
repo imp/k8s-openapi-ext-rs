@@ -78,6 +78,7 @@ pub use ext::ToEnvFrom;
 pub use ext::ToEnvVar;
 pub use ext::TolerationBuilder;
 pub use ext::TolerationExt;
+pub use ext::TypedObjectReferenceExt;
 pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
 pub use get::ConfigMapGetExt;
@@ -90,10 +91,6 @@ pub use get::PodConditionGetExt;
 pub use get::PodGetExt;
 pub use get::ReplicaSetConditionGetExt;
 pub use get::ReplicaSetGetExt;
-
-openapi::k8s_if_ge_1_26! {
-pub use ext::TypedObjectReferenceExt;
-}
 
 mod ext;
 mod get;
