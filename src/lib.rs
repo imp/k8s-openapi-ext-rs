@@ -9,20 +9,25 @@
 #![warn(missing_debug_implementations)]
 #![warn(rust_2018_compatibility)]
 #![warn(rust_2021_compatibility)]
-// #![warn(rust_2024_compatibility)]
+#![warn(rust_2024_compatibility)]
 #![warn(rust_2018_idioms)]
 #![warn(unused)]
 #![deny(warnings)]
 
 pub use k8s_openapi as openapi;
 
+pub use openapi::api::admissionregistration::v1 as admissionregistrationv1;
 pub use openapi::api::apps::v1 as appsv1;
+pub use openapi::api::authentication::v1 as authenticationv1;
+pub use openapi::api::authorization::v1 as authorizationv1;
 pub use openapi::api::autoscaling::v1 as autoscalingv1;
 pub use openapi::api::autoscaling::v2 as autoscalingv2;
 pub use openapi::api::batch::v1 as batchv1;
+pub use openapi::api::certificates::v1 as certificatesv1;
 pub use openapi::api::coordination::v1 as coordinationv1;
 pub use openapi::api::core::v1 as corev1;
 pub use openapi::api::events::v1 as eventsv1;
+pub use openapi::api::node::v1 as nodev1;
 pub use openapi::api::policy::v1 as policyv1;
 pub use openapi::api::rbac::v1 as rbacv1;
 pub use openapi::api::scheduling::v1 as schedulingv1;
@@ -35,6 +40,10 @@ pub use openapi::kube_aggregator::pkg::apis::apiregistration::v1 as apiregistrat
 pub use openapi::ByteString;
 pub use openapi::Metadata;
 pub use openapi::Resource;
+
+openapi::k8s_if_ge_1_29! {
+pub use openapi::api::flowcontrol::v1 as flowcontrolv1;
+}
 
 pub use ext::ClusterRoleBindingExt;
 pub use ext::ClusterRoleExt;
@@ -145,5 +154,5 @@ pub fn owner_reference(
 }
 
 fn default<T: Default>() -> T {
-    Default::default()
+    T::default()
 }

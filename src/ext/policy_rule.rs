@@ -11,6 +11,12 @@ pub trait PolicyRuleExt: Sized {
 
     fn resources(self, resources: impl IntoIterator<Item = impl ToString>) -> Self;
 
+    fn resource_name(self, name: impl ToString) -> Self {
+        self.resource_names([name])
+    }
+
+    fn resource_names(self, names: impl IntoIterator<Item = impl ToString>) -> Self;
+
     fn with_status(self) -> Self;
 
     fn verb(self, verb: impl ToString) -> Self;
@@ -56,6 +62,14 @@ impl PolicyRuleExt for rbacv1::PolicyRule {
                 .collect(),
         );
         Self { resources, ..self }
+    }
+
+    fn resource_names(self, names: impl IntoIterator<Item = impl ToString>) -> Self {
+        let resource_names = Some(names.into_iter().map(|name| name.to_string()).collect());
+        Self {
+            resource_names,
+            ..self
+        }
     }
 
     fn with_status(mut self) -> Self {

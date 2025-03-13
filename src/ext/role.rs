@@ -3,6 +3,10 @@ use super::*;
 pub trait RoleExt: super::ResourceBuilder {
     fn new(name: impl ToString) -> Self;
 
+    fn rule(self, rule: rbacv1::PolicyRule) -> Self {
+        self.rules([rule])
+    }
+
     fn rules(self, rules: impl IntoIterator<Item = rbacv1::PolicyRule>) -> Self;
 }
 
