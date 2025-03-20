@@ -107,7 +107,7 @@ pub trait PodGetExt {
 
     fn is_ready(&self) -> bool {
         self.condition("Ready")
-            .map_or(false, |condition| condition.is_true())
+            .is_some_and(|condition| condition.is_true())
     }
 }
 

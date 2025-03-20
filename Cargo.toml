@@ -2,7 +2,7 @@
 name = "k8s-openapi-ext"
 version = "0.0.41"
 edition = "2021"
-rust-version = "1.61"
+rust-version = "1.83.0"
 description = "Collection of fluent builder traits for Kubernetes objects"
 repository = "https://github.com/imp/k8s-openapi-ext-rs"
 license = "Apache-2.0"

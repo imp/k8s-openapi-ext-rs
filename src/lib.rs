@@ -48,6 +48,7 @@ pub use openapi::api::flowcontrol::v1 as flowcontrolv1;
 pub use ext::ClusterRoleBindingExt;
 pub use ext::ClusterRoleExt;
 pub use ext::ConfigMapExt;
+pub use ext::ConfigMapVolumeSourceExt;
 pub use ext::ContainerExt;
 pub use ext::CronJobExt;
 pub use ext::DaemonSetExt;

@@ -10,6 +10,11 @@ pub trait PodSpecExt {
     fn image_pull_secret(self, name: impl ToString) -> Self;
 
     fn volumes(self, volumes: impl IntoIterator<Item = corev1::Volume>) -> Self;
+
+    fn mode_selector(
+        self,
+        node_selector: impl IntoIterator<Item = (impl ToString, impl ToString)>,
+    ) -> Self;
 }
 
 impl PodSpecExt for corev1::PodSpec {
@@ -83,5 +88,21 @@ impl PodSpecExt for corev1::PodSpec {
     fn volumes(self, volumes: impl IntoIterator<Item = corev1::Volume>) -> Self {
         let volumes = Some(volumes.into_iter().collect());
         Self { volumes, ..self }
+    }
+
+    fn mode_selector(
+        self,
+        node_selector: impl IntoIterator<Item = (impl ToString, impl ToString)>,
+    ) -> Self {
+        let node_selector = Some(
+            node_selector
+                .into_iter()
+                .map(|(key, value)| (key.to_string(), value.to_string()))
+                .collect(),
+        );
+        Self {
+            node_selector,
+            ..self
+        }
     }
 }
