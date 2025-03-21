@@ -44,6 +44,6 @@ impl HasSpec for corev1::Node {
     type Spec = corev1::NodeSpec;
 
     fn spec_mut(&mut self) -> &mut Self::Spec {
-        self.spec.get_or_insert_with(default)
+        self.spec.get_or_insert_default()
     }
 }

@@ -99,6 +99,6 @@ impl HasSpec for appsv1::DaemonSet {
     type Spec = appsv1::DaemonSetSpec;
 
     fn spec_mut(&mut self) -> &mut Self::Spec {
-        self.spec.get_or_insert_with(default)
+        self.spec.get_or_insert_default()
     }
 }

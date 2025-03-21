@@ -173,9 +173,9 @@ impl ContainerExt for corev1::Container {
         limits: impl IntoIterator<Item = (String, resource::Quantity)>,
     ) -> Self {
         self.resources
-            .get_or_insert_with(default)
+            .get_or_insert_default()
             .limits
-            .get_or_insert_with(default)
+            .get_or_insert_default()
             .extend(limits);
         self
     }
@@ -185,11 +185,10 @@ impl ContainerExt for corev1::Container {
         requests: impl IntoIterator<Item = (String, resource::Quantity)>,
     ) -> Self {
         self.resources
-            .get_or_insert_with(default)
+            .get_or_insert_default()
             .requests
-            .get_or_insert_with(default)
+            .get_or_insert_default()
             .extend(requests);
-
         self
     }
 

@@ -170,7 +170,7 @@ where
     fn owner(mut self, owner: metav1::OwnerReference) -> Self {
         self.metadata_mut()
             .owner_references
-            .get_or_insert_with(default)
+            .get_or_insert_default()
             .push(owner);
         self
     }
@@ -178,7 +178,7 @@ where
     fn label(mut self, key: impl ToString, value: impl ToString) -> Self {
         self.metadata_mut()
             .labels
-            .get_or_insert_with(default)
+            .get_or_insert_default()
             .insert(key.to_string(), value.to_string());
         self
     }
@@ -189,7 +189,7 @@ where
             .map(|(key, value)| (key.to_string(), value.to_string()));
         self.metadata_mut()
             .labels
-            .get_or_insert_with(default)
+            .get_or_insert_default()
             .extend(labels);
         self
     }

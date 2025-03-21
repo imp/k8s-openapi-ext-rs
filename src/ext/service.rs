@@ -105,6 +105,6 @@ impl HasSpec for corev1::Service {
     type Spec = corev1::ServiceSpec;
 
     fn spec_mut(&mut self) -> &mut Self::Spec {
-        self.spec.get_or_insert_with(default)
+        self.spec.get_or_insert_default()
     }
 }

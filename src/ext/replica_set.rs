@@ -85,7 +85,7 @@ impl ReplicaSetExt for appsv1::ReplicaSet {
     fn pod_spec(mut self, pod_spec: corev1::PodSpec) -> Self {
         self.spec_mut()
             .template
-            .get_or_insert_with(default)
+            .get_or_insert_default()
             .spec
             .replace(pod_spec);
         self
@@ -96,6 +96,6 @@ impl HasSpec for appsv1::ReplicaSet {
     type Spec = appsv1::ReplicaSetSpec;
 
     fn spec_mut(&mut self) -> &mut Self::Spec {
-        self.spec.get_or_insert_with(default)
+        self.spec.get_or_insert_default()
     }
 }

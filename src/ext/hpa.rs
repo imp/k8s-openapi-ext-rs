@@ -74,7 +74,7 @@ impl HasSpec for autoscalingv2::HorizontalPodAutoscaler {
     type Spec = autoscalingv2::HorizontalPodAutoscalerSpec;
 
     fn spec_mut(&mut self) -> &mut Self::Spec {
-        self.spec.get_or_insert_with(default)
+        self.spec.get_or_insert_default()
     }
 }
 
