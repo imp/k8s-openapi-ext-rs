@@ -1,6 +1,6 @@
 use super::*;
 
-pub trait ContainerExt {
+pub trait ContainerExt: Sized {
     fn new(name: impl ToString) -> Self;
 
     fn env(self, env: impl IntoIterator<Item = impl ToEnvVar>) -> Self;
@@ -9,9 +9,26 @@ pub trait ContainerExt {
 
     fn image(self, image: impl ToString) -> Self;
 
-    fn image_pull_policy_always(self) -> Self;
+    fn image_pull_policy(self, policy: impl ToString) -> Self;
 
-    fn image_pull_policy_never(self) -> Self;
+    fn image_pull_policy_always(self) -> Self {
+        self.image_pull_policy("Always")
+    }
+
+    fn image_pull_policy_never(self) -> Self {
+        self.image_pull_policy("Never")
+    }
+
+    fn security_context(self, security_context: corev1::SecurityContext) -> Self;
+    fn allow_privilege_escalation(self, yes: bool) -> Self;
+
+    fn privileged(self, yes: bool) -> Self;
+
+    fn run_as_user(self, user: i64) -> Self;
+
+    fn run_as_group(self, group: i64) -> Self;
+
+    fn run_as_non_root(self, yes: bool) -> Self;
 
     fn liveness_probe(self, probe: corev1::Probe) -> Self;
 
@@ -81,18 +98,62 @@ impl ContainerExt for corev1::Container {
         Self { image, ..self }
     }
 
-    fn image_pull_policy_always(self) -> Self {
-        let image_pull_policy = Some(String::from("Always"));
+    fn image_pull_policy(self, policy: impl ToString) -> Self {
+        let image_pull_policy = Some(policy.to_string());
         Self {
             image_pull_policy,
             ..self
         }
     }
 
-    fn image_pull_policy_never(self) -> Self {
-        let image_pull_policy = Some(String::from("Never"));
+    fn security_context(self, security_context: corev1::SecurityContext) -> Self {
         Self {
-            image_pull_policy,
+            security_context: Some(security_context),
+            ..self
+        }
+    }
+
+    fn allow_privilege_escalation(self, yes: bool) -> Self {
+        let mut security_context = self.security_context.unwrap_or_default();
+        security_context.allow_privilege_escalation = Some(yes);
+        Self {
+            security_context: Some(security_context),
+            ..self
+        }
+    }
+
+    fn run_as_user(self, user: i64) -> Self {
+        let mut security_context = self.security_context.unwrap_or_default();
+        security_context.run_as_user = Some(user);
+        Self {
+            security_context: Some(security_context),
+            ..self
+        }
+    }
+
+    fn run_as_group(self, group: i64) -> Self {
+        let mut security_context = self.security_context.unwrap_or_default();
+        security_context.run_as_group = Some(group);
+        Self {
+            security_context: Some(security_context),
+            ..self
+        }
+    }
+
+    fn run_as_non_root(self, yes: bool) -> Self {
+        let mut security_context = self.security_context.unwrap_or_default();
+        security_context.run_as_non_root = Some(yes);
+        Self {
+            security_context: Some(security_context),
+            ..self
+        }
+    }
+
+    fn privileged(self, yes: bool) -> Self {
+        let mut security_context = self.security_context.unwrap_or_default();
+        security_context.privileged = Some(yes);
+        Self {
+            security_context: Some(security_context),
             ..self
         }
     }
