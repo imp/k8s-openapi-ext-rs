@@ -59,25 +59,3 @@ impl ServicePortExt for corev1::ServicePort {
         Self { protocol, ..self }
     }
 }
-
-pub trait ToIntOrString {
-    fn to_int_or_string(self) -> intstr::IntOrString;
-}
-
-impl ToIntOrString for i32 {
-    fn to_int_or_string(self) -> intstr::IntOrString {
-        intstr::IntOrString::Int(self)
-    }
-}
-
-impl ToIntOrString for String {
-    fn to_int_or_string(self) -> intstr::IntOrString {
-        intstr::IntOrString::String(self)
-    }
-}
-
-impl ToIntOrString for &str {
-    fn to_int_or_string(self) -> intstr::IntOrString {
-        intstr::IntOrString::String(self.to_string())
-    }
-}

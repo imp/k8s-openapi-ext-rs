@@ -5,10 +5,10 @@ use super::*;
 /// Builders for `corev1::Probe` objects
 pub trait ProbeExt {
     /// HTTP get probe
-    fn http_get(path: impl AsRef<Path>, port: u16) -> Self;
+    fn http_get(path: impl AsRef<Path>, port: impl ToIntOrString) -> Self;
 
     /// TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported
-    fn tcp_socket(port: u16) -> Self;
+    fn tcp_socket(port: impl ToIntOrString) -> Self;
 
     /// gRPC probe
     ///
@@ -34,9 +34,9 @@ pub trait ProbeExt {
 }
 
 impl ProbeExt for corev1::Probe {
-    fn http_get(path: impl AsRef<Path>, port: u16) -> Self {
+    fn http_get(path: impl AsRef<Path>, port: impl ToIntOrString) -> Self {
         let path = Some(path.as_ref().display().to_string());
-        let port = intstr::IntOrString::Int(port.into());
+        let port = port.to_int_or_string();
         let http_get = Some(corev1::HTTPGetAction {
             path,
             port,
@@ -59,9 +59,10 @@ impl ProbeExt for corev1::Probe {
         }
     }
 
-    fn tcp_socket(port: u16) -> Self {
+    fn tcp_socket(port: impl ToIntOrString) -> Self {
+        let port = port.to_int_or_string();
         let tcp_socket = Some(corev1::TCPSocketAction {
-            port: intstr::IntOrString::Int(port.into()),
+            port,
             // host: todo!(),
             ..default()
         });

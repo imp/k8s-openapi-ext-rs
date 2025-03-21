@@ -50,6 +50,7 @@ pub use ext::ClusterRoleExt;
 pub use ext::ConfigMapExt;
 pub use ext::ConfigMapVolumeSourceExt;
 pub use ext::ContainerExt;
+pub use ext::ContainerPortExt;
 pub use ext::CronJobExt;
 pub use ext::DaemonSetExt;
 pub use ext::DeploymentExt;
@@ -157,4 +158,56 @@ pub fn owner_reference(
 
 fn default<T: Default>() -> T {
     T::default()
+}
+
+pub trait ToIntOrString {
+    fn to_int_or_string(self) -> intstr::IntOrString;
+}
+
+impl ToIntOrString for u8 {
+    fn to_int_or_string(self) -> intstr::IntOrString {
+        intstr::IntOrString::Int(self.into())
+    }
+}
+
+impl ToIntOrString for i8 {
+    fn to_int_or_string(self) -> intstr::IntOrString {
+        intstr::IntOrString::Int(self.into())
+    }
+}
+
+impl ToIntOrString for u16 {
+    fn to_int_or_string(self) -> intstr::IntOrString {
+        intstr::IntOrString::Int(self.into())
+    }
+}
+
+impl ToIntOrString for i16 {
+    fn to_int_or_string(self) -> intstr::IntOrString {
+        intstr::IntOrString::Int(self.into())
+    }
+}
+
+impl ToIntOrString for i32 {
+    fn to_int_or_string(self) -> intstr::IntOrString {
+        intstr::IntOrString::Int(self)
+    }
+}
+
+impl ToIntOrString for u64 {
+    fn to_int_or_string(self) -> intstr::IntOrString {
+        intstr::IntOrString::Int(self as i32)
+    }
+}
+
+impl ToIntOrString for String {
+    fn to_int_or_string(self) -> intstr::IntOrString {
+        intstr::IntOrString::String(self)
+    }
+}
+
+impl ToIntOrString for &str {
+    fn to_int_or_string(self) -> intstr::IntOrString {
+        intstr::IntOrString::String(self.to_string())
+    }
 }

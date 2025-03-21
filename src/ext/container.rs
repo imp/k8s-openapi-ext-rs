@@ -19,6 +19,8 @@ pub trait ContainerExt: Sized {
         self.image_pull_policy("Never")
     }
 
+    fn ports(self, ports: impl IntoIterator<Item = corev1::ContainerPort>) -> Self;
+
     fn security_context(self, security_context: corev1::SecurityContext) -> Self;
 
     fn allow_privilege_escalation(mut self, yes: bool) -> Self {
@@ -122,6 +124,11 @@ impl ContainerExt for corev1::Container {
             image_pull_policy,
             ..self
         }
+    }
+
+    fn ports(self, ports: impl IntoIterator<Item = corev1::ContainerPort>) -> Self {
+        let ports = Some(ports.into_iter().collect());
+        Self { ports, ..self }
     }
 
     fn security_context(self, security_context: corev1::SecurityContext) -> Self {
