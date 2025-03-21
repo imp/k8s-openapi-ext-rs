@@ -11,7 +11,7 @@ pub trait PodSpecExt {
 
     fn volumes(self, volumes: impl IntoIterator<Item = corev1::Volume>) -> Self;
 
-    fn mode_selector(
+    fn node_selector(
         self,
         node_selector: impl IntoIterator<Item = (impl ToString, impl ToString)>,
     ) -> Self;
@@ -90,7 +90,7 @@ impl PodSpecExt for corev1::PodSpec {
         Self { volumes, ..self }
     }
 
-    fn mode_selector(
+    fn node_selector(
         self,
         node_selector: impl IntoIterator<Item = (impl ToString, impl ToString)>,
     ) -> Self {
