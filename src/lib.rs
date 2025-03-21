@@ -77,6 +77,7 @@ pub use ext::SecretExt;
 pub use ext::SecretExt2;
 pub use ext::SecretReferenceExt;
 pub use ext::SecretVolumeSourceExt;
+pub use ext::SecurityContextExt;
 pub use ext::ServiceAccountExt;
 pub use ext::ServiceExt;
 pub use ext::ServicePortExt;
