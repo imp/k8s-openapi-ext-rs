@@ -75,3 +75,11 @@ impl PodTemplateSpecExt for corev1::PodTemplateSpec {
         }
     }
 }
+
+impl HasSpec for corev1::PodTemplateSpec {
+    type Spec = corev1::PodSpec;
+
+    fn spec_mut(&mut self) -> &mut Self::Spec {
+        self.spec.get_or_insert_default()
+    }
+}
