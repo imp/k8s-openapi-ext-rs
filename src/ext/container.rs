@@ -20,15 +20,31 @@ pub trait ContainerExt: Sized {
     }
 
     fn security_context(self, security_context: corev1::SecurityContext) -> Self;
-    fn allow_privilege_escalation(self, yes: bool) -> Self;
 
-    fn privileged(self, yes: bool) -> Self;
+    fn allow_privilege_escalation(mut self, yes: bool) -> Self {
+        self.security_context_mut().allow_privilege_escalation = Some(yes);
+        self
+    }
 
-    fn run_as_user(self, user: i64) -> Self;
+    fn run_as_user(mut self, user: i64) -> Self {
+        self.security_context_mut().run_as_user = Some(user);
+        self
+    }
 
-    fn run_as_group(self, group: i64) -> Self;
+    fn run_as_group(mut self, group: i64) -> Self {
+        self.security_context_mut().run_as_group = Some(group);
+        self
+    }
 
-    fn run_as_non_root(self, yes: bool) -> Self;
+    fn run_as_non_root(mut self, yes: bool) -> Self {
+        self.security_context_mut().run_as_non_root = Some(yes);
+        self
+    }
+
+    fn privileged(mut self, yes: bool) -> Self {
+        self.security_context_mut().privileged = Some(yes);
+        self
+    }
 
     fn liveness_probe(self, probe: corev1::Probe) -> Self;
 
@@ -47,6 +63,8 @@ pub trait ContainerExt: Sized {
     fn startup_probe(self, probe: corev1::Probe) -> Self;
 
     fn volume_mounts(self, volume_mounts: impl IntoIterator<Item = corev1::VolumeMount>) -> Self;
+
+    fn security_context_mut(&mut self) -> &mut corev1::SecurityContext;
 }
 
 impl ContainerExt for corev1::Container {
@@ -113,51 +131,6 @@ impl ContainerExt for corev1::Container {
         }
     }
 
-    fn allow_privilege_escalation(self, yes: bool) -> Self {
-        let mut security_context = self.security_context.unwrap_or_default();
-        security_context.allow_privilege_escalation = Some(yes);
-        Self {
-            security_context: Some(security_context),
-            ..self
-        }
-    }
-
-    fn run_as_user(self, user: i64) -> Self {
-        let mut security_context = self.security_context.unwrap_or_default();
-        security_context.run_as_user = Some(user);
-        Self {
-            security_context: Some(security_context),
-            ..self
-        }
-    }
-
-    fn run_as_group(self, group: i64) -> Self {
-        let mut security_context = self.security_context.unwrap_or_default();
-        security_context.run_as_group = Some(group);
-        Self {
-            security_context: Some(security_context),
-            ..self
-        }
-    }
-
-    fn run_as_non_root(self, yes: bool) -> Self {
-        let mut security_context = self.security_context.unwrap_or_default();
-        security_context.run_as_non_root = Some(yes);
-        Self {
-            security_context: Some(security_context),
-            ..self
-        }
-    }
-
-    fn privileged(self, yes: bool) -> Self {
-        let mut security_context = self.security_context.unwrap_or_default();
-        security_context.privileged = Some(yes);
-        Self {
-            security_context: Some(security_context),
-            ..self
-        }
-    }
-
     fn liveness_probe(mut self, probe: corev1::Probe) -> Self {
         self.liveness_probe = Some(probe);
         self
@@ -204,5 +177,9 @@ impl ContainerExt for corev1::Container {
         let volume_mounts = volume_mounts.into_iter().collect();
         self.volume_mounts = Some(volume_mounts);
         self
+    }
+
+    fn security_context_mut(&mut self) -> &mut corev1::SecurityContext {
+        self.security_context.get_or_insert_default()
     }
 }
