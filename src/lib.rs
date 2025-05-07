@@ -103,6 +103,7 @@ pub use get::PodConditionGetExt;
 pub use get::PodGetExt;
 pub use get::ReplicaSetConditionGetExt;
 pub use get::ReplicaSetGetExt;
+pub use get::SelfSubjectReviewGetExt;
 
 mod ext;
 mod get;

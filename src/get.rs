@@ -12,6 +12,7 @@ pub use pod::PodConditionGetExt;
 pub use pod::PodGetExt;
 pub use replicaset::ReplicaSetConditionGetExt;
 pub use replicaset::ReplicaSetGetExt;
+pub use selfsubjectreview::SelfSubjectReviewGetExt;
 
 mod configmap;
 mod container;
@@ -19,3 +20,4 @@ mod deployment;
 mod namespace;
 mod pod;
 mod replicaset;
+mod selfsubjectreview;
