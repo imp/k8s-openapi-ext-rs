@@ -10,12 +10,12 @@ pub use deployment::DeploymentGetExt;
 pub use namespace::NamespaceGetExt;
 pub use pod::PodConditionGetExt;
 pub use pod::PodGetExt;
-pub use replica_set::ReplicaSetConditionGetExt;
-pub use replica_set::ReplicaSetGetExt;
+pub use replicaset::ReplicaSetConditionGetExt;
+pub use replicaset::ReplicaSetGetExt;
 
 mod configmap;
 mod container;
 mod deployment;
 mod namespace;
 mod pod;
-mod replica_set;
+mod replicaset;
