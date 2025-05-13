@@ -27,6 +27,7 @@ pub use openapi::api::certificates::v1 as certificatesv1;
 pub use openapi::api::coordination::v1 as coordinationv1;
 pub use openapi::api::core::v1 as corev1;
 pub use openapi::api::events::v1 as eventsv1;
+pub use openapi::api::flowcontrol::v1 as flowcontrolv1;
 pub use openapi::api::node::v1 as nodev1;
 pub use openapi::api::policy::v1 as policyv1;
 pub use openapi::api::rbac::v1 as rbacv1;
@@ -40,10 +41,6 @@ pub use openapi::kube_aggregator::pkg::apis::apiregistration::v1 as apiregistrat
 pub use openapi::ByteString;
 pub use openapi::Metadata;
 pub use openapi::Resource;
-
-openapi::k8s_if_ge_1_29! {
-pub use openapi::api::flowcontrol::v1 as flowcontrolv1;
-}
 
 pub use ext::ClusterRoleBindingExt;
 pub use ext::ClusterRoleExt;
