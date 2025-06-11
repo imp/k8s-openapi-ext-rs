@@ -120,6 +120,18 @@ pub trait ResourceBuilder: Sized {
     ///
     fn labels(self, labels: impl IntoIterator<Item = (impl ToString, impl ToString)>) -> Self;
 
+    /// Set one annotation for this object.
+    /// For settins multiple lables at once prefer `labels()`
+    ///
+    fn annotation(self, key: impl ToString, value: impl ToString) -> Self;
+
+    /// Set annotations for this object
+    ///
+    fn annotations(
+        self,
+        annotations: impl IntoIterator<Item = (impl ToString, impl ToString)>,
+    ) -> Self;
+
     fn with_resource_version(self, resource_version: String) -> Self;
 
     /// Set recommended label 'app.kubernetes.io/name'
@@ -193,6 +205,28 @@ where
             .labels
             .get_or_insert_default()
             .extend(labels);
+        self
+    }
+
+    fn annotation(mut self, key: impl ToString, value: impl ToString) -> Self {
+        self.metadata_mut()
+            .annotations
+            .get_or_insert_default()
+            .insert(key.to_string(), value.to_string());
+        self
+    }
+
+    fn annotations(
+        mut self,
+        annotations: impl IntoIterator<Item = (impl ToString, impl ToString)>,
+    ) -> Self {
+        let annotations = annotations
+            .into_iter()
+            .map(|(key, value)| (key.to_string(), value.to_string()));
+        self.metadata_mut()
+            .annotations
+            .get_or_insert_default()
+            .extend(annotations);
         self
     }
 
