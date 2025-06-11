@@ -34,6 +34,10 @@ pub trait PodGetExt {
         self.spec()?.tolerations.as_deref()
     }
 
+    fn readiness_gates(&self) -> Option<&[corev1::PodReadinessGate]> {
+        self.spec()?.readiness_gates.as_deref()
+    }
+
     // From status
     fn message(&self) -> Option<&str> {
         self.status()?.message.as_deref()
@@ -106,8 +110,20 @@ pub trait PodGetExt {
     }
 
     fn is_ready(&self) -> bool {
-        self.condition("Ready")
-            .is_some_and(|condition| condition.is_true())
+        let gates = self
+            .readiness_gates()
+            .unwrap_or_default()
+            .iter()
+            .all(|gate| {
+                self.condition(&gate.condition_type)
+                    .is_some_and(|condition| condition.is_true())
+            });
+
+        let ready = self
+            .condition("Ready")
+            .is_some_and(|condition| condition.is_true());
+
+        gates && ready
     }
 }
 
