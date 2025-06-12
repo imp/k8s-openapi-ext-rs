@@ -9,6 +9,15 @@ pub trait PodTemplateSpecExt: Sized {
 
     fn labels(self, labels: impl IntoIterator<Item = (impl ToString, impl ToString)>) -> Self;
 
+    fn annotation(self, key: impl ToString, value: impl ToString) -> Self {
+        self.annotations([(key, value)])
+    }
+
+    fn annotations(
+        self,
+        annotations: impl IntoIterator<Item = (impl ToString, impl ToString)>,
+    ) -> Self;
+
     /// Set recommended label 'app.kubernetes.io/name'
     ///
     fn app_name(self, name: impl ToString) -> Self {
@@ -65,6 +74,21 @@ impl PodTemplateSpecExt for corev1::PodTemplateSpec {
             .labels
             .get_or_insert_default()
             .extend(labels);
+        self
+    }
+
+    fn annotations(
+        mut self,
+        annotations: impl IntoIterator<Item = (impl ToString, impl ToString)>,
+    ) -> Self {
+        let annotations = annotations
+            .into_iter()
+            .map(|(key, value)| (key.to_string(), value.to_string()));
+        self.metadata
+            .get_or_insert_default()
+            .annotations
+            .get_or_insert_default()
+            .extend(annotations);
         self
     }
 
