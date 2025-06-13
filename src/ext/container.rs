@@ -3,6 +3,8 @@ use super::*;
 pub trait ContainerExt: Sized {
     fn new(name: impl ToString) -> Self;
 
+    fn command(self, command: impl IntoIterator<Item = impl ToString>) -> Self;
+
     fn env(self, env: impl IntoIterator<Item = impl ToEnvVar>) -> Self;
 
     fn env_from(self, env: impl IntoIterator<Item = impl ToEnvFrom>) -> Self;
@@ -67,6 +69,8 @@ pub trait ContainerExt: Sized {
     fn volume_mounts(self, volume_mounts: impl IntoIterator<Item = corev1::VolumeMount>) -> Self;
 
     fn security_context_mut(&mut self) -> &mut corev1::SecurityContext;
+
+    fn working_dir(self, dir: impl ToString) -> Self;
 }
 
 impl ContainerExt for corev1::Container {
@@ -96,6 +100,14 @@ impl ContainerExt for corev1::Container {
             // volume_mounts: todo!(),
             // working_dir: todo!(),
             ..default()
+        }
+    }
+
+    fn command(self, command: impl IntoIterator<Item = impl ToString>) -> Self {
+        let command = command.into_iter().map(|item| item.to_string()).collect();
+        Self {
+            command: Some(command),
+            ..self
         }
     }
 
@@ -188,5 +200,13 @@ impl ContainerExt for corev1::Container {
 
     fn security_context_mut(&mut self) -> &mut corev1::SecurityContext {
         self.security_context.get_or_insert_default()
+    }
+
+    fn working_dir(self, dir: impl ToString) -> Self {
+        let working_dir = Some(dir.to_string());
+        Self {
+            working_dir,
+            ..self
+        }
     }
 }
