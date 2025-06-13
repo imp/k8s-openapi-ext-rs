@@ -9,6 +9,8 @@ pub trait SecurityContextExt {
     fn run_as_non_root(self, yes: bool) -> Self;
     fn run_as_user(self, user: i64) -> Self;
     fn privileged(self, yes: bool) -> Self;
+    fn add_capabilities(self, capabilities: impl IntoIterator<Item = impl ToString>) -> Self;
+    fn drop_capabilities(self, capabilities: impl IntoIterator<Item = impl ToString>) -> Self;
 }
 
 impl SecurityContextExt for corev1::SecurityContext {
@@ -70,5 +72,23 @@ impl SecurityContextExt for corev1::SecurityContext {
             privileged: Some(privileged),
             ..self
         }
+    }
+
+    fn add_capabilities(mut self, capabilities: impl IntoIterator<Item = impl ToString>) -> Self {
+        let add = capabilities
+            .into_iter()
+            .map(|item| item.to_string())
+            .collect();
+        self.capabilities.get_or_insert_default().add = Some(add);
+        self
+    }
+
+    fn drop_capabilities(mut self, capabilities: impl IntoIterator<Item = impl ToString>) -> Self {
+        let drop = capabilities
+            .into_iter()
+            .map(|item| item.to_string())
+            .collect();
+        self.capabilities.get_or_insert_default().drop = Some(drop);
+        self
     }
 }
