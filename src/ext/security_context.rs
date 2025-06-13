@@ -74,6 +74,8 @@ impl SecurityContextExt for corev1::SecurityContext {
         }
     }
 
+    /// Set capabilities 'add' list
+    ///
     fn add_capabilities(mut self, capabilities: impl IntoIterator<Item = impl ToString>) -> Self {
         let add = capabilities
             .into_iter()
@@ -83,6 +85,8 @@ impl SecurityContextExt for corev1::SecurityContext {
         self
     }
 
+    /// Set capabilities 'drop' list
+    ///
     fn drop_capabilities(mut self, capabilities: impl IntoIterator<Item = impl ToString>) -> Self {
         let drop = capabilities
             .into_iter()

@@ -30,6 +30,11 @@ pub trait ContainerExt: Sized {
         self
     }
 
+    fn read_only_root_filesystem(mut self, yes: bool) -> Self {
+        self.security_context_mut().read_only_root_filesystem = Some(yes);
+        self
+    }
+
     fn run_as_user(mut self, user: i64) -> Self {
         self.security_context_mut().run_as_user = Some(user);
         self
@@ -47,6 +52,32 @@ pub trait ContainerExt: Sized {
 
     fn privileged(mut self, yes: bool) -> Self {
         self.security_context_mut().privileged = Some(yes);
+        self
+    }
+
+    /// Add `capabilities` to 'add' list
+    ///
+    fn add_capabilities(mut self, capabilities: impl IntoIterator<Item = impl ToString>) -> Self {
+        let add = capabilities.into_iter().map(|item| item.to_string());
+        self.security_context_mut()
+            .capabilities
+            .get_or_insert_default()
+            .add
+            .get_or_insert_default()
+            .extend(add);
+        self
+    }
+
+    /// Add `capabilities` to 'drop' list
+    ///
+    fn drop_capabilities(mut self, capabilities: impl IntoIterator<Item = impl ToString>) -> Self {
+        let drop = capabilities.into_iter().map(|item| item.to_string());
+        self.security_context_mut()
+            .capabilities
+            .get_or_insert_default()
+            .drop
+            .get_or_insert_default()
+            .extend(drop);
         self
     }
 
