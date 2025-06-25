@@ -5,8 +5,12 @@ pub trait ContainerExt: Sized {
 
     fn command(self, command: impl IntoIterator<Item = impl ToString>) -> Self;
 
+    /// Add environment variables to the container environment list
+    ///
     fn env(self, env: impl IntoIterator<Item = impl ToEnvVar>) -> Self;
 
+    /// Add environment variables to the container environment list
+    ///
     fn env_from(self, env: impl IntoIterator<Item = impl ToEnvFrom>) -> Self;
 
     fn image(self, image: impl ToString) -> Self;
@@ -21,6 +25,8 @@ pub trait ContainerExt: Sized {
         self.image_pull_policy("Never")
     }
 
+    /// Add `ports` to container ports list
+    ///
     fn ports(self, ports: impl IntoIterator<Item = corev1::ContainerPort>) -> Self;
 
     fn security_context(self, security_context: corev1::SecurityContext) -> Self;
@@ -142,18 +148,16 @@ impl ContainerExt for corev1::Container {
         }
     }
 
-    fn env(self, env: impl IntoIterator<Item = impl ToEnvVar>) -> Self {
-        let env = Some(
-            env.into_iter()
-                .map(|envvar| ToEnvVar::to_envvar(&envvar))
-                .collect(),
-        );
-        Self { env, ..self }
+    fn env(mut self, env: impl IntoIterator<Item = impl ToEnvVar>) -> Self {
+        let env = env.into_iter().map(|envvar| ToEnvVar::to_envvar(&envvar));
+        self.env.get_or_insert_default().extend(env);
+        self
     }
 
-    fn env_from(self, env: impl IntoIterator<Item = impl ToEnvFrom>) -> Self {
-        let env_from = Some(env.into_iter().map(ToEnvFrom::to_envfrom).collect());
-        Self { env_from, ..self }
+    fn env_from(mut self, env: impl IntoIterator<Item = impl ToEnvFrom>) -> Self {
+        let env = env.into_iter().map(ToEnvFrom::to_envfrom);
+        self.env_from.get_or_insert_default().extend(env);
+        self
     }
 
     fn image(self, image: impl ToString) -> Self {
@@ -169,9 +173,9 @@ impl ContainerExt for corev1::Container {
         }
     }
 
-    fn ports(self, ports: impl IntoIterator<Item = corev1::ContainerPort>) -> Self {
-        let ports = Some(ports.into_iter().collect());
-        Self { ports, ..self }
+    fn ports(mut self, ports: impl IntoIterator<Item = corev1::ContainerPort>) -> Self {
+        self.ports.get_or_insert_default().extend(ports);
+        self
     }
 
     fn security_context(self, security_context: corev1::SecurityContext) -> Self {

@@ -13,7 +13,7 @@ pub trait PodSpecExt {
     ///
     fn service_account_name(self, name: impl ToString) -> Self;
 
-    /// Set image pull secret
+    /// Add image pull secret
     ///
     fn image_pull_secret(self, name: impl ToString) -> Self;
 
