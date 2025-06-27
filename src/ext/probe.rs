@@ -37,12 +37,13 @@ impl ProbeExt for corev1::Probe {
     fn http_get(path: impl AsRef<Path>, port: impl ToIntOrString) -> Self {
         let path = Some(path.as_ref().display().to_string());
         let port = port.to_int_or_string();
+        let scheme = Some("HTTP".to_string());
         let http_get = Some(corev1::HTTPGetAction {
             path,
             port,
+            scheme,
             // host: todo!(),
             // http_headers: todo!(),
-            // scheme: todo!(),
             ..default()
         });
         Self {
