@@ -13,11 +13,20 @@ pub trait ServicePortExt {
     ///
     fn protocol(self, protocol: impl ToString) -> Self;
 
+    /// Create TCP ServicePort
+    ///
+    fn tcp(name: impl ToString, port: i32) -> Self
+    where
+        Self: Sized,
+    {
+        Self::new(name, port).protocol("TCP")
+    }
+
     /// Create UDP ServicePort
     ///
     fn udp(name: impl ToString, port: i32) -> Self
     where
-        Self: std::marker::Sized,
+        Self: Sized,
     {
         Self::new(name, port).protocol("UDP")
     }
@@ -26,7 +35,7 @@ pub trait ServicePortExt {
     ///
     fn sctp(name: impl ToString, port: i32) -> Self
     where
-        Self: std::marker::Sized,
+        Self: Sized,
     {
         Self::new(name, port).protocol("SCTP")
     }
