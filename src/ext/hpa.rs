@@ -12,6 +12,18 @@ pub trait HorizontalPodAutoscalerExt: super::ResourceBuilder + Sized {
     fn max_replicas(self, max_replicas: i32) -> Self;
 
     fn min_replicas(self, min_replicas: i32) -> Self;
+
+    fn metrics(self, metrics: impl IntoIterator<Item = autoscalingv2::MetricSpec>) -> Self;
+
+    fn metric(self, metric: autoscalingv2::MetricSpec) -> Self {
+        self.metrics([metric])
+    }
+
+    fn behavior(self, behavior: autoscalingv2::HorizontalPodAutoscalerBehavior) -> Self;
+
+    fn scale_up(self, rules: autoscalingv2::HPAScalingRules) -> Self;
+
+    fn scale_down(self, rules: autoscalingv2::HPAScalingRules) -> Self;
 }
 
 impl HorizontalPodAutoscalerExt for autoscalingv2::HorizontalPodAutoscaler {
@@ -66,6 +78,37 @@ impl HorizontalPodAutoscalerExt for autoscalingv2::HorizontalPodAutoscaler {
 
     fn min_replicas(mut self, min_replicas: i32) -> Self {
         self.spec_mut().min_replicas.replace(min_replicas);
+        self
+    }
+
+    fn metrics(mut self, metrics: impl IntoIterator<Item = autoscalingv2::MetricSpec>) -> Self {
+        self.spec_mut()
+            .metrics
+            .get_or_insert_default()
+            .extend(metrics);
+        self
+    }
+
+    fn behavior(mut self, behavior: autoscalingv2::HorizontalPodAutoscalerBehavior) -> Self {
+        self.spec_mut().behavior.replace(behavior);
+        self
+    }
+
+    fn scale_up(mut self, rules: autoscalingv2::HPAScalingRules) -> Self {
+        self.spec_mut()
+            .behavior
+            .get_or_insert_default()
+            .scale_up
+            .replace(rules);
+        self
+    }
+
+    fn scale_down(mut self, rules: autoscalingv2::HPAScalingRules) -> Self {
+        self.spec_mut()
+            .behavior
+            .get_or_insert_default()
+            .scale_down
+            .replace(rules);
         self
     }
 }
