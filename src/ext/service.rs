@@ -2,13 +2,25 @@ use super::*;
 
 pub trait ServiceExt: super::ResourceBuilder {
     fn new(name: impl ToString) -> Self;
+
+    /// Create new "ClusterIP" service
     fn cluster_ip(
         name: impl ToString,
         ports: impl IntoIterator<Item = corev1::ServicePort>,
     ) -> Self;
+
+    /// Create new "ClusterIP" service with `spec.cluster_ip` set to "None"
+    fn headless(name: impl ToString, ports: impl IntoIterator<Item = corev1::ServicePort>) -> Self;
+
+    /// Create new "NodePort" service
     fn node_port(name: impl ToString) -> Self;
+
+    /// Create new "LoadBalancer" service
     fn load_balancer(name: impl ToString) -> Self;
+
+    /// Create new "ExternalName" service
     fn external_name(name: impl ToString, external_name: impl ToString) -> Self;
+
     fn with_labels(
         name: impl ToString,
         labels: impl IntoIterator<Item = (impl ToString, impl ToString)>,
@@ -42,6 +54,12 @@ impl ServiceExt for corev1::Service {
             .spec_mut()
             .ports
             .replace(ports.into_iter().collect());
+        service
+    }
+
+    fn headless(name: impl ToString, ports: impl IntoIterator<Item = corev1::ServicePort>) -> Self {
+        let mut service = Self::cluster_ip(name, ports);
+        service.spec_mut().cluster_ip.replace("None".to_string());
         service
     }
 
