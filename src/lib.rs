@@ -90,6 +90,8 @@ pub use ext::TolerationExt;
 pub use ext::TypedObjectReferenceExt;
 pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
+pub use get::ComponentConditionGetExt;
+pub use get::ComponentStatusGetExt;
 pub use get::ConfigMapGetExt;
 pub use get::ContainerGetExt;
 pub use get::ContainerStateTerminatedGetExt;

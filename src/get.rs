@@ -2,6 +2,8 @@ use std::collections::BTreeMap;
 
 use super::*;
 
+pub use component::ComponentConditionGetExt;
+pub use component::ComponentStatusGetExt;
 pub use configmap::ConfigMapGetExt;
 pub use container::ContainerGetExt;
 pub use container::ContainerStateTerminatedGetExt;
@@ -16,6 +18,7 @@ pub use replicaset::ReplicaSetConditionGetExt;
 pub use replicaset::ReplicaSetGetExt;
 pub use selfsubjectreview::SelfSubjectReviewGetExt;
 
+mod component;
 mod configmap;
 mod container;
 mod deployment;
