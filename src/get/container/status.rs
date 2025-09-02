@@ -4,7 +4,7 @@ pub trait ContainerStatusGetExt {
     fn container_status(&self) -> &corev1::ContainerStatus;
 
     fn name(&self) -> &str {
-        &self.container_status().name
+        self.container_status().name.as_str()
     }
 
     fn allocated_resources(&self) -> Option<&BTreeMap<String, resource::Quantity>> {
@@ -44,6 +44,27 @@ pub trait ContainerStatusGetExt {
 
     fn state(&self) -> Option<&corev1::ContainerState> {
         self.container_status().state.as_ref()
+    }
+
+    fn running(&self) -> Option<&corev1::ContainerStateRunning> {
+        self.state()?.running.as_ref()
+    }
+
+    fn terminated(&self) -> Option<&corev1::ContainerStateTerminated> {
+        self.state()?.terminated.as_ref()
+    }
+
+    fn waiting(&self) -> Option<&corev1::ContainerStateWaiting> {
+        self.state()?.waiting.as_ref()
+    }
+
+    fn terminated_reason(&self) -> Option<String> {
+        self.terminated()
+            .map(|terminated| terminated.access_reason())
+    }
+
+    fn waiting_reason(&self) -> Option<&str> {
+        self.waiting()?.reason.as_deref()
     }
 
     openapi::k8s_if_ge_1_31! {

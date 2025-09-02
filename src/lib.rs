@@ -92,6 +92,8 @@ pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
 pub use get::ConfigMapGetExt;
 pub use get::ContainerGetExt;
+pub use get::ContainerStateTerminatedGetExt;
+pub use get::ContainerStateWaitingGetExt;
 pub use get::ContainerStatusGetExt;
 pub use get::DeploymentGetExt;
 pub use get::EphemeralContainerGetExt;

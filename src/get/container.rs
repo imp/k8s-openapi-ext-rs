@@ -1,9 +1,12 @@
 use super::*;
 
 pub use ephemeral::EphemeralContainerGetExt;
+pub use state::ContainerStateTerminatedGetExt;
+pub use state::ContainerStateWaitingGetExt;
 pub use status::ContainerStatusGetExt;
 
 mod ephemeral;
+mod state;
 mod status;
 
 pub trait ContainerGetExt {

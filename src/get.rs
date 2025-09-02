@@ -4,6 +4,8 @@ use super::*;
 
 pub use configmap::ConfigMapGetExt;
 pub use container::ContainerGetExt;
+pub use container::ContainerStateTerminatedGetExt;
+pub use container::ContainerStateWaitingGetExt;
 pub use container::ContainerStatusGetExt;
 pub use container::EphemeralContainerGetExt;
 pub use deployment::DeploymentGetExt;
