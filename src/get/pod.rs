@@ -5,6 +5,8 @@ pub use condition::PodConditionGetExt;
 mod condition;
 
 pub trait PodGetExt {
+    const POD_SCHEDULED: &str = "PodScheduled";
+
     fn spec(&self) -> Option<&corev1::PodSpec>;
 
     fn status(&self) -> Option<&corev1::PodStatus>;
@@ -124,6 +126,10 @@ pub trait PodGetExt {
             .is_some_and(|condition| condition.is_true());
 
         gates && ready
+    }
+
+    fn pod_scheduled_reason(&self) -> Option<&str> {
+        self.condition(Self::POD_SCHEDULED)?.reason()
     }
 }
 
