@@ -101,18 +101,17 @@ pub trait SecretExt: super::ResourceBuilder + Sized {
         Self::new(name).r#type(Self::SECRET_TYPE_OPAQUE)
     }
 
-    /// Create "kubernetes.io/dockerconfigjson" secret with `config` as plain text
-    /// (i.e. string_data field)
-    fn docker_config_json(name: impl ToString, config: impl ToString) -> Self {
+    /// Create "kubernetes.io/dockerconfigjson" secret with `config` as `string_data` field
+    /// (i.e. plain text)
+    fn docker_config_json_text(name: impl ToString, config: impl ToString) -> Self {
         let data = [(Self::DOCKER_CONFIG_JSON_KEY, config)];
         Self::new(name)
             .r#type(Self::SECRET_TYPE_DOCKER_CONFIG_JSON)
             .string_data(data)
     }
 
-    /// Create "kubernetes.io/dockerconfigjson" secret with `config` as base64 encoded text
-    /// (i.e. data field)
-    fn docker_config_json_base64_encoded(name: impl ToString, config: ByteString) -> Self {
+    /// Create "kubernetes.io/dockerconfigjson" secret with `config` as `data` field
+    fn docker_config_json_binary(name: impl ToString, config: ByteString) -> Self {
         let data = [(Self::DOCKER_CONFIG_JSON_KEY, config)];
         Self::new(name)
             .r#type(Self::SECRET_TYPE_DOCKER_CONFIG_JSON)
@@ -152,16 +151,19 @@ pub trait SecretExt: super::ResourceBuilder + Sized {
         let config = format!(
             r#"{{"auths":{{"{registry}":{{"username":"{username}","password":"{password}","auth":"{auth}"}}}}}}"#
         );
-        Self::docker_config_json(name, config)
+        Self::docker_config_json_text(name, config)
     }
 }
 
 pub trait SecretExt2: SecretExt {
     /// Creates new image pull secret object when you already have the .docker/config.json
     /// content extracted from some other source (i.e. secret)
-    #[deprecated(since = "0.0.54", note = "use SecretExt::docker_config_json instead")]
+    #[deprecated(
+        since = "0.0.54",
+        note = "use SecretExt::docker_config_json_text instead"
+    )]
     fn image_pull_secret(name: impl ToString, config: impl ToString) -> Self {
-        Self::docker_config_json(name, config)
+        Self::docker_config_json_text(name, config)
     }
 }
 
