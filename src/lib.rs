@@ -116,6 +116,8 @@ pub mod namespace {
 }
 
 pub mod label {
+    pub const CLUSTER_SERVICE: &str = "kubernetes.io/cluster-service";
+    pub const KUBERNETES_IO_NAME: &str = "kubernetes.io/name";
     pub const APP_NAME: &str = "app.kubernetes.io/name";
     pub const APP_INSTANCE: &str = "app.kubernetes.io/instance";
     pub const APP_VERSION: &str = "app.kubernetes.io/version";
