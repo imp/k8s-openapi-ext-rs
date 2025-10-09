@@ -5,6 +5,8 @@ pub trait VolumeMountExt: Sized {
     fn new(mount_path: impl ToString, volume: &corev1::Volume) -> Self;
 
     fn read_only(self) -> Self;
+
+    fn sub_path(self, path: impl ToString) -> Self;
 }
 
 impl VolumeMountExt for corev1::VolumeMount {
@@ -24,6 +26,11 @@ impl VolumeMountExt for corev1::VolumeMount {
 
     fn read_only(mut self) -> Self {
         self.read_only = Some(true);
+        self
+    }
+
+    fn sub_path(mut self, path: impl ToString) -> Self {
+        self.sub_path = Some(path.to_string());
         self
     }
 }
