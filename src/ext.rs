@@ -50,6 +50,7 @@ pub use toleration::TolerationExt;
 pub use typed_object_reference::TypedObjectReferenceExt;
 pub use volume::VolumeExt;
 pub use volume_mount::VolumeMountExt;
+pub use stateful_set::StatefulSetExt;
 
 use effect::Effect;
 
@@ -89,6 +90,7 @@ mod security_context;
 mod service;
 mod service_account;
 mod service_port;
+mod stateful_set;
 mod storage_class;
 mod subject;
 mod taint;
