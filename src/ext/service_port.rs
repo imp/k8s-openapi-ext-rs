@@ -3,7 +3,7 @@ use super::*;
 pub trait ServicePortExt {
     /// Construct new `ServicePort`
     ///
-    fn new(name: impl ToString, port: i32) -> Self;
+    fn new(name: impl ToString, port: impl Into<i32>) -> Self;
 
     /// Set targetPort
     ///
@@ -15,7 +15,7 @@ pub trait ServicePortExt {
 
     /// Create TCP ServicePort
     ///
-    fn tcp(name: impl ToString, port: i32) -> Self
+    fn tcp(name: impl ToString, port: impl Into<i32>) -> Self
     where
         Self: Sized,
     {
@@ -24,7 +24,7 @@ pub trait ServicePortExt {
 
     /// Create UDP ServicePort
     ///
-    fn udp(name: impl ToString, port: i32) -> Self
+    fn udp(name: impl ToString, port: impl Into<i32>) -> Self
     where
         Self: Sized,
     {
@@ -33,7 +33,7 @@ pub trait ServicePortExt {
 
     /// Create SCTP ServicePort
     ///
-    fn sctp(name: impl ToString, port: i32) -> Self
+    fn sctp(name: impl ToString, port: impl Into<i32>) -> Self
     where
         Self: Sized,
     {
@@ -42,8 +42,9 @@ pub trait ServicePortExt {
 }
 
 impl ServicePortExt for corev1::ServicePort {
-    fn new(name: impl ToString, port: i32) -> Self {
+    fn new(name: impl ToString, port: impl Into<i32>) -> Self {
         let name = Some(name.to_string());
+        let port = port.into();
         Self {
             name,
             port,
