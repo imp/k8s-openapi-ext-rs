@@ -5,6 +5,7 @@ pub use condition::PodConditionGetExt;
 mod condition;
 
 pub trait PodGetExt {
+    #[deprecated(note = "Use corev1::PodCondition::POD_SCHEDULED instead")]
     const POD_SCHEDULED: &str = "PodScheduled";
 
     fn spec(&self) -> Option<&corev1::PodSpec>;
@@ -122,14 +123,15 @@ pub trait PodGetExt {
             });
 
         let ready = self
-            .condition("Ready")
+            .condition(corev1::PodCondition::POD_READY)
             .is_some_and(|condition| condition.is_true());
 
         gates && ready
     }
 
     fn pod_scheduled_reason(&self) -> Option<&str> {
-        self.condition(Self::POD_SCHEDULED)?.reason()
+        self.condition(corev1::PodCondition::POD_SCHEDULED)?
+            .reason()
     }
 }
 
