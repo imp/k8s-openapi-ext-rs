@@ -109,22 +109,12 @@ pub use get::SelfSubjectReviewGetExt;
 mod ext;
 mod get;
 
+pub mod label;
+
 pub mod namespace {
     pub const DEFAULT: &str = "default";
     pub const KUBE_PUBLIC: &str = "kube-public";
     pub const KUBE_SYSTEM: &str = "kube-system";
-}
-
-pub mod label {
-    pub const CLUSTER_SERVICE: &str = "kubernetes.io/cluster-service";
-    pub const KUBERNETES_IO_NAME: &str = "kubernetes.io/name";
-    pub const APP_NAME: &str = "app.kubernetes.io/name";
-    pub const APP_INSTANCE: &str = "app.kubernetes.io/instance";
-    pub const APP_VERSION: &str = "app.kubernetes.io/version";
-    pub const APP_COMPONENT: &str = "app.kubernetes.io/component";
-    pub const APP_PART_OF: &str = "app.kubernetes.io/part-of";
-    pub const APP_MANAGED_BY: &str = "app.kubernetes.io/managed-by";
-    pub const DEFAULT_DEPLOYMENT_UNIQUE_LABEL_KEY: &str = "pod-template-hash";
 }
 
 pub fn typed_ref(
