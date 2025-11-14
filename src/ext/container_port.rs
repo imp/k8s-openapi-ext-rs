@@ -1,17 +1,17 @@
 use super::*;
 
 pub trait ContainerPortExt: Sized {
-    fn new(port: i32, protocol: impl ToString) -> Self;
+    fn new(port: impl Into<i32>, protocol: impl ToString) -> Self;
 
-    fn tcp(port: i32) -> Self {
+    fn tcp(port: impl Into<i32>) -> Self {
         Self::new(port, "TCP")
     }
 
-    fn udp(port: i32) -> Self {
+    fn udp(port: impl Into<i32>) -> Self {
         Self::new(port, "UDP")
     }
 
-    fn sctp(port: i32) -> Self {
+    fn sctp(port: impl Into<i32>) -> Self {
         Self::new(port, "SCTP")
     }
 
@@ -19,14 +19,14 @@ pub trait ContainerPortExt: Sized {
 
     fn host_ip(self, ip: impl ToString) -> Self;
 
-    fn host_port(self, port: i32) -> Self;
+    fn host_port(self, port: impl Into<i32>) -> Self;
 }
 
 impl ContainerPortExt for corev1::ContainerPort {
-    fn new(port: i32, protocol: impl ToString) -> Self {
+    fn new(port: impl Into<i32>, protocol: impl ToString) -> Self {
         let protocol = Some(protocol.to_string());
         Self {
-            container_port: port,
+            container_port: port.into(),
             protocol,
             // host_ip: (),
             // host_port: (),
@@ -45,8 +45,8 @@ impl ContainerPortExt for corev1::ContainerPort {
         Self { host_ip, ..self }
     }
 
-    fn host_port(self, port: i32) -> Self {
-        let host_port = Some(port);
+    fn host_port(self, port: impl Into<i32>) -> Self {
+        let host_port = Some(port.into());
         Self { host_port, ..self }
     }
 }
