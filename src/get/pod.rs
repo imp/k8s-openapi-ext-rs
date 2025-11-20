@@ -8,6 +8,32 @@ pub trait PodGetExt {
     #[deprecated(note = "Use corev1::PodCondition::POD_SCHEDULED instead")]
     const POD_SCHEDULED: &str = "PodScheduled";
 
+    /// The Pod has been accepted by the Kubernetes cluster, but one or more
+    /// of the containers has not been set up and made ready to run.
+    /// This includes time a Pod spends waiting to be scheduled as well as the
+    /// time spent downloading container images over the network.
+    const POD_PENDING: &str = "Pending";
+
+    /// The Pod has been bound to a node, and all of the containers have been
+    /// created. At least one container is still running, or is in the process
+    /// of starting or restarting.
+    const POD_RUNNING: &str = "Running";
+
+    /// All containers in the Pod have terminated in success, and will not
+    /// be restarted.
+    const POD_SUCCEEDED: &str = "Succeeded";
+
+    /// All containers in the Pod have terminated, and at least one container
+    /// has terminated in failure. That is, the container either exited with
+    /// non-zero status or was terminated by the system, and is not set for
+    /// automatic restarting.
+    const POD_FAILED: &str = "Failed";
+
+    /// For some reason the state of the Pod could not be obtained.
+    /// This phase typically occurs due to an error in communicating with
+    /// the node where the Pod should be running.
+    const POD_UNKNOWN: &str = "Unknown";
+
     fn spec(&self) -> Option<&corev1::PodSpec>;
 
     fn status(&self) -> Option<&corev1::PodStatus>;
@@ -110,6 +136,10 @@ pub trait PodGetExt {
         self.conditions()?
             .iter()
             .find(|condition| condition.type_ == type_)
+    }
+
+    fn is_running(&self) -> bool {
+        self.phase().is_some_and(|phase| phase == Self::POD_RUNNING)
     }
 
     fn is_ready(&self) -> bool {
