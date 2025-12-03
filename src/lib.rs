@@ -79,6 +79,7 @@ pub use ext::SecurityContextExt;
 pub use ext::ServiceAccountExt;
 pub use ext::ServiceExt;
 pub use ext::ServicePortExt;
+pub use ext::StatefulSetExt;
 pub use ext::StorageClassExt;
 pub use ext::SubjectExt;
 pub use ext::TaintExt;
@@ -105,6 +106,7 @@ pub use get::PodGetExt;
 pub use get::ReplicaSetConditionGetExt;
 pub use get::ReplicaSetGetExt;
 pub use get::SelfSubjectReviewGetExt;
+pub use get::StatefulSetGetExt;
 
 mod ext;
 mod get;

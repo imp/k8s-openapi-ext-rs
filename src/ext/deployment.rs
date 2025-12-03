@@ -73,15 +73,11 @@ impl DeploymentExt for appsv1::Deployment {
     }
 
     fn match_labels(
-        self,
+        mut self,
         match_labels: impl IntoIterator<Item = (impl ToString, impl ToString)>,
     ) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        spec.selector = spec.selector.match_labels(match_labels);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+        self.spec_mut().selector = metav1::LabelSelector::match_labels(match_labels);
+        self
     }
 
     fn strategy(mut self, strategy: appsv1::DeploymentStrategy) -> Self {

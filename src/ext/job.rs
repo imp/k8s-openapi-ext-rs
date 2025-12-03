@@ -96,16 +96,11 @@ impl JobExt for batchv1::Job {
     }
 
     fn match_labels(
-        self,
+        mut self,
         match_labels: impl IntoIterator<Item = (impl ToString, impl ToString)>,
     ) -> Self {
-        let mut spec = self.spec.unwrap_or_default();
-        let selector = spec.selector.unwrap_or_default().match_labels(match_labels);
-        spec.selector = Some(selector);
-        Self {
-            spec: Some(spec),
-            ..self
-        }
+        self.spec_mut().selector = Some(metav1::LabelSelector::match_labels(match_labels));
+        self
     }
 
     fn suspend(mut self, yes: bool) -> Self {

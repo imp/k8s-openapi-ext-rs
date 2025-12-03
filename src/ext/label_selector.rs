@@ -5,10 +5,8 @@ pub trait LabelSelectorExt {
     fn no_objects() -> Self;
     fn new() -> Self;
 
-    fn match_labels(
-        self,
-        match_labels: impl IntoIterator<Item = (impl ToString, impl ToString)>,
-    ) -> Self;
+    fn match_labels(match_labels: impl IntoIterator<Item = (impl ToString, impl ToString)>)
+        -> Self;
 }
 
 impl LabelSelectorExt for metav1::LabelSelector {
@@ -31,7 +29,6 @@ impl LabelSelectorExt for metav1::LabelSelector {
     }
 
     fn match_labels(
-        self,
         match_labels: impl IntoIterator<Item = (impl ToString, impl ToString)>,
     ) -> Self {
         let match_labels = match_labels

@@ -17,6 +17,7 @@ pub use pod::PodGetExt;
 pub use replicaset::ReplicaSetConditionGetExt;
 pub use replicaset::ReplicaSetGetExt;
 pub use selfsubjectreview::SelfSubjectReviewGetExt;
+pub use statefulset::StatefulSetGetExt;
 
 mod component;
 mod configmap;
@@ -26,3 +27,4 @@ mod namespace;
 mod pod;
 mod replicaset;
 mod selfsubjectreview;
+mod statefulset;
