@@ -4,6 +4,9 @@ use super::*;
 
 /// Builders for `corev1::Probe` objects
 pub trait ProbeExt {
+    /// Exec probe
+    fn exec(cmd: impl IntoIterator<Item = impl ToString>) -> Self;
+
     /// HTTP get probe
     fn http_get(path: impl AsRef<Path>, port: impl ToIntOrString) -> Self;
 
@@ -34,6 +37,26 @@ pub trait ProbeExt {
 }
 
 impl ProbeExt for corev1::Probe {
+    fn exec(cmd: impl IntoIterator<Item = impl ToString>) -> Self {
+        let command: Vec<String> = cmd.into_iter().map(|item| item.to_string()).collect();
+        let exec = Some(corev1::ExecAction {
+            command: Some(command),
+        });
+        Self {
+            exec,
+            // failure_threshold: todo!(),
+            // grpc: todo!(),
+            // http_get: todo!(),
+            // initial_delay_seconds: todo!(),
+            // period_seconds: todo!(),
+            // success_threshold: todo!(),
+            // tcp_socket: todo!(),
+            // termination_grace_period_seconds: todo!(),
+            // timeout_seconds: todo!(),
+            ..default()
+        }
+    }
+
     fn http_get(path: impl AsRef<Path>, port: impl ToIntOrString) -> Self {
         let path = Some(path.as_ref().display().to_string());
         let port = port.to_int_or_string();
