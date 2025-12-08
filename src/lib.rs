@@ -106,6 +106,7 @@ pub use get::PodConditionGetExt;
 pub use get::PodGetExt;
 pub use get::ReplicaSetConditionGetExt;
 pub use get::ReplicaSetGetExt;
+pub use get::SecretGetExt;
 pub use get::SelfSubjectReviewGetExt;
 pub use get::ServiceGetExt;
 pub use get::ServicePortGetExt;
