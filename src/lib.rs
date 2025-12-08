@@ -93,6 +93,7 @@ pub use ext::VolumeExt;
 pub use ext::VolumeMountExt;
 pub use get::ComponentConditionGetExt;
 pub use get::ComponentStatusGetExt;
+pub use get::ConditionGetExt;
 pub use get::ConfigMapGetExt;
 pub use get::ContainerGetExt;
 pub use get::ContainerStateTerminatedGetExt;
@@ -106,6 +107,8 @@ pub use get::PodGetExt;
 pub use get::ReplicaSetConditionGetExt;
 pub use get::ReplicaSetGetExt;
 pub use get::SelfSubjectReviewGetExt;
+pub use get::ServiceGetExt;
+pub use get::ServicePortGetExt;
 pub use get::StatefulSetGetExt;
 
 mod ext;

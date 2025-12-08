@@ -1,6 +1,11 @@
 use super::*;
 
 pub trait ServiceExt: super::ResourceBuilder {
+    const EXTERNAL_NAME: &str = "ExternalName";
+    const CLUSTER_IP: &str = "ClusterIP";
+    const NODE_PORT: &str = "NodePort";
+    const LOAD_BALANCER: &str = "LoadBalancer";
+
     fn new(name: impl ToString) -> Self;
 
     /// Create new "ClusterIP" service
@@ -49,7 +54,7 @@ impl ServiceExt for corev1::Service {
         name: impl ToString,
         ports: impl IntoIterator<Item = corev1::ServicePort>,
     ) -> Self {
-        let mut service = Self::with_type(name, "ClusterIP");
+        let mut service = Self::with_type(name, Self::CLUSTER_IP);
         service
             .spec_mut()
             .ports
@@ -58,21 +63,21 @@ impl ServiceExt for corev1::Service {
     }
 
     fn headless(name: impl ToString, ports: impl IntoIterator<Item = corev1::ServicePort>) -> Self {
-        let mut service = Self::cluster_ip(name, ports);
+        let mut service = <Self as ServiceExt>::cluster_ip(name, ports);
         service.spec_mut().cluster_ip.replace("None".to_string());
         service
     }
 
     fn node_port(name: impl ToString) -> Self {
-        Self::with_type(name, "NodePort")
+        Self::with_type(name, Self::NODE_PORT)
     }
 
     fn load_balancer(name: impl ToString) -> Self {
-        Self::with_type(name, "LoadBalancer")
+        Self::with_type(name, Self::LOAD_BALANCER)
     }
 
     fn external_name(name: impl ToString, external_name: impl ToString) -> Self {
-        let mut service = Self::with_type(name, "ExternalName");
+        let mut service = Self::with_type(name, Self::EXTERNAL_NAME);
         service
             .spec_mut()
             .external_name
